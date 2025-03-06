@@ -2,6 +2,17 @@
   publish = "/"
   command = "npm run build"
 
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Content-Security-Policy = "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' https: data:; font-src 'self' https: data:;"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
@@ -9,3 +20,10 @@
 
 [build.environment]
   NODE_VERSION = "18.0.0"
+
+# Force HTTPS
+[[redirects]]
+  from = "http://*"
+  to = "https://:splat"
+  status = 301
+  force = true
