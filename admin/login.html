@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gartin WiFi Solutions - Admin Login</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 2rem;
+            background: rgba(26, 26, 26, 0.95);
+            border: 1px solid var(--primary-color);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header img {
+            max-width: 150px;
+            margin-bottom: 1rem;
+        }
+
+        .login-header h1 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: 5px;
+            color: var(--white);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.2);
+        }
+
+        .login-btn {
+            background: var(--primary-color);
+            color: var(--dark-bg);
+            border: none;
+            padding: 1rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .login-btn:hover {
+            background: #00c2e6;
+            transform: translateY(-1px);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .error-message {
+            background: rgba(255, 50, 50, 0.1);
+            border: 1px solid rgba(255, 50, 50, 0.3);
+            color: #ff5050;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 0.95rem;
+            display: none;
+        }
+
+        .back-to-site {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .back-to-site a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-site a:hover {
+            color: #00c2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <img src="../assets/logo.png" alt="Gartin WiFi Solutions">
+            <h1>Admin Access</h1>
+        </div>
+        
+        <form id="loginForm" class="login-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="login-btn">Secure Login</button>
+            
+            <div id="errorMessage" class="error-message"></div>
+        </form>
+
+        <div class="back-to-site">
+            <a href="../index.html">← Back to Website</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const errorMessage = document.getElementById('errorMessage');
+            const loginBtn = document.querySelector('.login-btn');
+            
+            // Disable button and show loading state
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Authenticating...';
+            errorMessage.style.display = 'none';
+
+            try {
+                const response = await fetch('/admin/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: document.getElementById('username').value,
+                        password: document.getElementById('password').value
+                    })
+                });
+
+                if (response.ok) {
+                    window.location.href = '/admin/dashboard.html';
+                } else {
+                    throw new Error('Invalid credentials');
+                }
+            } catch (error) {
+                errorMessage.textContent = 'Invalid username or password';
+                errorMessage.style.display = 'block';
+                
+                // Reset button state
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Secure Login';
+            }
+        });
+    </script>
+</body>
+</html>

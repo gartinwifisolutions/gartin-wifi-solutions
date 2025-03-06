@@ -1,0 +1,24 @@
+# Node.js
+node_modules/
+npm-debug.log
+.env
+
+# Database
+*.db
+*.sqlite
+
+# IDE and OS files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Build directories
+dist/
+build/
+.netlify/
+
+package-lock.json
