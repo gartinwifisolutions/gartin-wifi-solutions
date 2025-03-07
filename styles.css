@@ -57,23 +57,26 @@ a {
 }
 
 .logo {
-    flex-shrink: 0;
-}
-
-.logo a {
     display: block;
+    height: 40px;
 }
 
 .logo img {
-    height: 40px;
+    height: 100%;
     width: auto;
 }
 
 .nav-links {
     display: flex;
-    gap: 2rem;
     align-items: center;
-    margin-left: auto;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav-links li {
+    margin: 0;
 }
 
 .nav-links a {
@@ -112,6 +115,7 @@ a {
     cursor: pointer;
     padding: 0.5rem;
     margin-left: 1rem;
+    z-index: 1000;
 }
 
 .menu-icon {
@@ -120,7 +124,7 @@ a {
     height: 2px;
     background-color: var(--primary-color);
     position: relative;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .menu-icon::before,
@@ -130,15 +134,29 @@ a {
     width: 24px;
     height: 2px;
     background-color: var(--primary-color);
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .menu-icon::before {
     top: -6px;
+    transform-origin: center;
 }
 
 .menu-icon::after {
     bottom: -6px;
+    transform-origin: center;
+}
+
+.menu-icon.active {
+    background-color: transparent;
+}
+
+.menu-icon.active::before {
+    transform: translateY(6px) rotate(45deg);
+}
+
+.menu-icon.active::after {
+    transform: translateY(-6px) rotate(-45deg);
 }
 
 .mobile-menu {
@@ -148,9 +166,10 @@ a {
     left: 0;
     right: 0;
     background: rgba(26, 26, 26, 0.98);
-    padding: 1rem;
+    padding: 1.5rem;
     z-index: 999;
     border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+    backdrop-filter: blur(10px);
 }
 
 .mobile-menu a {
@@ -160,22 +179,32 @@ a {
     padding: 1rem;
     text-align: center;
     font-weight: 500;
-    transition: color 0.3s ease;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
 }
 
 .mobile-menu a:hover {
     color: var(--primary-color);
+    background: rgba(0, 229, 255, 0.1);
+    border-radius: 6px;
 }
 
 .mobile-menu .cta-button {
     background-color: var(--primary-color);
     color: var(--secondary-color);
-    margin: 1rem 2rem;
-    padding: 1rem;
+    margin: 1rem auto;
+    padding: 1rem 2rem;
     border-radius: 6px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    max-width: 300px;
+}
+
+.mobile-menu .cta-button:hover {
+    background-color: var(--text-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
 }
 
 @media (max-width: 768px) {
@@ -193,18 +222,18 @@ a {
 
     .mobile-menu.active {
         display: block;
+        animation: slideDown 0.3s ease-out forwards;
     }
+}
 
-    .menu-icon.active {
-        background-color: transparent;
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
     }
-
-    .menu-icon.active::before {
-        transform: translateY(6px) rotate(45deg);
-    }
-
-    .menu-icon.active::after {
-        transform: translateY(-6px) rotate(-45deg);
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
