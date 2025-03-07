@@ -48,8 +48,8 @@ a {
 }
 
 .nav-container {
-    position: relative;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
@@ -57,10 +57,7 @@ a {
 }
 
 .logo {
-    position: absolute;
-    left: 2rem;
-    top: 50%;
-    transform: translateY(-50%);
+    display: block;
     height: 40px;
 }
 
@@ -70,55 +67,12 @@ a {
     display: block;
 }
 
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    margin: 0 0 0 auto;
-    padding: 0;
-    list-style: none;
-}
-
-.nav-links li {
-    margin: 0;
-}
-
-.nav-links a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-    white-space: nowrap;
-}
-
-.nav-links a:hover {
-    color: var(--primary-color);
-}
-
-.nav-links .cta-button {
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    padding: 0.75rem 1.5rem;
-    border-radius: 6px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
-}
-
-.nav-links .cta-button:hover {
-    background-color: var(--text-color);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
-}
-
 .mobile-menu-btn {
-    display: none;
+    display: block;
     background: none;
     border: none;
     cursor: pointer;
     padding: 0.5rem;
-    margin-left: 1rem;
 }
 
 .menu-icon {
@@ -158,20 +112,6 @@ a {
 
 .menu-icon.active::after {
     transform: translateY(-6px) rotate(-45deg);
-}
-
-@media (max-width: 768px) {
-    .nav-container {
-        padding: 1rem;
-    }
-
-    .nav-links {
-        display: none;
-    }
-
-    .mobile-menu-btn {
-        display: block;
-    }
 }
 
 /* Mobile Menu */
@@ -221,22 +161,18 @@ a {
     border-radius: 6px;
 }
 
-.mobile-menu .cta-button {
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    margin: 1rem auto;
-    padding: 1rem 2rem;
-    border-radius: 6px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    max-width: 300px;
-}
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 1rem;
+    }
 
-.mobile-menu .cta-button:hover {
-    background-color: var(--text-color);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
+    .nav-links {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
 }
 
 /* Hero Section */
