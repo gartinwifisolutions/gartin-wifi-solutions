@@ -112,6 +112,15 @@ a {
     box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
 }
 
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    margin-left: 1rem;
+}
+
 .menu-icon {
     display: block;
     width: 24px;
@@ -151,15 +160,6 @@ a {
     transform: translateY(-6px) rotate(-45deg);
 }
 
-.mobile-menu-btn {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-    z-index: 1001;
-}
-
 @media (max-width: 768px) {
     .nav-container {
         padding: 1rem;
@@ -171,9 +171,6 @@ a {
 
     .mobile-menu-btn {
         display: block;
-        position: fixed;
-        top: 1.25rem;
-        right: 1rem;
     }
 }
 
