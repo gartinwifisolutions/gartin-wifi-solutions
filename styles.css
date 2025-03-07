@@ -48,11 +48,22 @@ a {
 }
 
 .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     max-width: 1200px;
     margin: 0 auto;
     padding: 1rem 2rem;
+}
+
+.nav-left {
+    flex: 0 0 auto;
+}
+
+.nav-right {
+    flex: 1;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
 }
 
@@ -77,6 +88,7 @@ a {
 
 .nav-links li {
     margin: 0;
+    padding: 0;
 }
 
 .nav-links a {
@@ -85,6 +97,7 @@ a {
     font-weight: 500;
     transition: color 0.3s ease;
     white-space: nowrap;
+    display: block;
 }
 
 .nav-links a:hover {
@@ -114,8 +127,21 @@ a {
     border: none;
     cursor: pointer;
     padding: 0.5rem;
-    margin-left: 1rem;
-    z-index: 1000;
+    margin-left: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 1rem;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
 }
 
 .menu-icon {
@@ -208,18 +234,6 @@ a {
 }
 
 @media (max-width: 768px) {
-    .nav-container {
-        padding: 1rem;
-    }
-
-    .nav-links {
-        display: none;
-    }
-
-    .mobile-menu-btn {
-        display: block;
-    }
-
     .mobile-menu.active {
         display: block;
         animation: slideDown 0.3s ease-out forwards;
