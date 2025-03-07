@@ -177,11 +177,21 @@ nav ul li a.cta-button:hover {
     nav ul li a.cta-button {
         background-color: var(--primary-color);
         color: var(--secondary-color);
-        margin-top: 1rem;
+        font-weight: 600;
+        padding: 1rem 2rem;
+        margin-top: 1.5rem;
+        border-radius: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
     }
 
-    nav ul li a.cta-button:hover {
+    nav ul li a.cta-button:hover,
+    nav ul li a.cta-button:focus {
         background-color: var(--text-color);
+        color: var(--secondary-color);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 229, 255, 0.3);
     }
 }
 
