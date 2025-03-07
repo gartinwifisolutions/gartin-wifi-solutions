@@ -60,63 +60,33 @@
             </div>
             <p class="response-time">We typically respond within 24 hours to schedule your consultation.</p>
             
-            <form name="consultation" method="POST" data-netlify="true" class="consultation-form">
-                <div class="form-group">
-                    <label for="name">Full Name*</label>
-                    <input type="text" id="name" name="name" required placeholder="Enter your full name">
-                </div>
-
-                <div class="form-group">
-                    <label for="address">Street Address*</label>
-                    <input type="text" id="address" name="address" required placeholder="123 Main St">
-                </div>
-
-                <div class="form-group">
-                    <label for="address2">Apartment/Suite/Unit</label>
-                    <input type="text" id="address2" name="address2" placeholder="Apt #, Suite #, etc.">
-                </div>
-
-                <div class="form-group">
-                    <label for="city">City*</label>
-                    <input type="text" id="city" name="city" required placeholder="City">
-                </div>
-
-                <div class="form-group">
-                    <label for="state">State*</label>
-                    <input type="text" id="state" name="state" required placeholder="OH" pattern="[A-Za-z]{2}" maxlength="2" title="Please enter a two-letter state code (e.g., OH)" value="OH">
-                </div>
-
-                <div class="form-group">
-                    <label for="zip">ZIP Code*</label>
-                    <input type="text" id="zip" name="zip" required placeholder="43103" pattern="[0-9]{5}" maxlength="5" title="Please enter a valid 5-digit ZIP code">
-                </div>
-
-                <div class="form-group">
-                    <label for="phone">Phone Number*</label>
-                    <input type="tel" id="phone" name="phone" required placeholder="(XXX) XXX-XXXX" pattern="\([0-9]{3}\) [0-9]{3}-[0-9]{4}" title="Please enter a phone number in the format: (XXX) XXX-XXXX">
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email Address*</label>
-                    <input type="email" id="email" name="email" required placeholder="your.email@example.com">
-                </div>
-
-                <div class="form-group">
-                    <label for="message">Additional Details</label>
-                    <textarea id="message" name="message" rows="5" placeholder="Please describe your needs in detail. For example:
-- Current WiFi issues you're experiencing
-- Smart home devices you'd like to install or integrate
-- Specific areas needing security camera coverage
-- Any other technology concerns"></textarea>
-                </div>
-
-                <div class="form-notice">
-                    <p>* Required fields</p>
-                    <p>By submitting this form, you agree to be contacted about our services.</p>
-                </div>
-
-                <button type="submit" class="submit-btn">Submit Consultation Request</button>
-            </form>
+            <div class="consultation-container">
+                <form name="consultation" method="POST" data-netlify="true" class="consultation-form">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" required placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" required placeholder="Email Address">
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="phone" name="phone" required placeholder="Phone Number">
+                    </div>
+                    <div class="form-group">
+                        <select id="service" name="service" required>
+                            <option value="" disabled selected>Select Service</option>
+                            <option value="wifi">WiFi Optimization</option>
+                            <option value="smart-home">Smart Home Installation</option>
+                            <option value="security">Security Camera Setup</option>
+                            <option value="integration">Device Integration</option>
+                            <option value="support">Technical Support</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" required placeholder="Tell us about your needs"></textarea>
+                    </div>
+                    <button type="submit" class="cta-button">Schedule Consultation</button>
+                </form>
+            </div>
         </div>
     </section>
 
