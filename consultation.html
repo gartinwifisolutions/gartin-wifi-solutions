@@ -5,30 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Schedule Consultation - Gartin WiFi Solutions</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">
-                <a href="index.html">
-                    <img src="assets/logo.png" alt="Gartin Wifi Solutions">
-                </a>
-            </div>
+            <a href="index.html" class="logo">
+                <img src="assets/logo.png" alt="Gartin WiFi Solutions Logo">
+            </a>
             <div class="nav-links">
                 <a href="index.html#services">Services</a>
-                <a href="index.html#why-us">Why Choose Us</a>
                 <a href="index.html#about">About</a>
-                <a href="index.html#contact">Contact</a>
+                <a href="consultation.html" class="cta-button">Schedule Consultation</a>
             </div>
             <button class="mobile-menu-btn">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span class="menu-icon"></span>
             </button>
         </div>
     </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <a href="index.html#services">Services</a>
+        <a href="index.html#about">About</a>
+        <a href="consultation.html" class="cta-button">Schedule Consultation</a>
+    </div>
 
     <!-- Consultation Section -->
     <section class="consultation-section">
@@ -104,5 +107,17 @@
     </section>
 
     <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const menuIcon = document.querySelector('.menu-icon');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            
+            menuBtn.addEventListener('click', function() {
+                menuIcon.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+            });
+        });
+    </script>
 </body>
 </html>
