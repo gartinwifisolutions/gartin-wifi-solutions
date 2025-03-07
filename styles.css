@@ -260,6 +260,43 @@ nav ul li a.cta-button:hover {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
+/* Hero Section CTA Button */
+.hero .consultation-btn {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
+    margin-top: 2rem;
+}
+
+.hero .consultation-btn:hover,
+.hero .consultation-btn:focus {
+    background-color: var(--text-color);
+    color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 229, 255, 0.3);
+}
+
+@media screen and (max-width: 768px) {
+    .hero .consultation-btn {
+        width: auto;
+        min-width: 250px;
+        text-align: center;
+        padding: 1.2rem 2.5rem;
+        font-size: 1.1rem;
+        margin: 2rem auto;
+        display: block;
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
 @media (max-width: 768px) {
     .hero h1 {
         font-size: 2.5rem;
@@ -740,48 +777,62 @@ nav ul li a.cta-button:hover {
 
 /* Form Validation Messages */
 .success-message {
-    margin-top: 1rem;
-    padding: 1rem;
-    background: rgba(0, 229, 255, 0.1);
+    background: rgba(26, 26, 26, 0.95);
     border: 1px solid var(--primary-color);
-    border-radius: 5px;
-    color: var(--primary-color);
+    border-radius: 10px;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 600px;
     text-align: center;
-    font-family: var(--font-heading);
-    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-#consultationForm input:invalid {
-    border-color: #ff4444;
+.success-message .success-content {
+    color: var(--white);
 }
 
-#consultationForm input:focus:invalid {
-    box-shadow: 0 0 0 2px rgba(255, 68, 68, 0.1);
+.success-message h3 {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    font-family: 'Montserrat', sans-serif;
 }
 
-#consultationForm input:valid {
-    border-color: rgba(0, 229, 255, 0.3);
+.success-message p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0.5rem 0;
+    color: rgba(255, 255, 255, 0.9);
 }
 
-#consultationForm input:focus:valid {
-    box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.1);
+.error-message {
+    background: rgba(255, 50, 50, 0.1);
+    border: 1px solid rgba(255, 50, 50, 0.3);
+    color: #ff5050;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 0.95rem;
 }
 
-#consultationForm input:invalid + .validation-message {
-    display: block;
-    color: #ff4444;
-    font-size: 0.85rem;
-    margin-top: 0.25rem;
+/* Loading State */
+.submit-btn:disabled {
+    background-color: rgba(0, 229, 255, 0.5);
+    cursor: not-allowed;
+    transform: none !important;
 }
 
-@media (max-width: 768px) {
-    .contact-container {
-        grid-template-columns: 1fr;
+@keyframes slideDown {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
     }
-    
-    .contact-item p, 
-    .contact-item a {
-        font-size: 1rem;
+    to {
+        transform: translateY(0);
+        opacity: 1;
     }
 }
 
@@ -1219,22 +1270,4 @@ nav ul li a.cta-button:hover {
     border-radius: 5px;
     text-align: center;
     font-size: 0.95rem;
-}
-
-/* Loading State */
-.submit-btn:disabled {
-    background-color: rgba(0, 229, 255, 0.5);
-    cursor: not-allowed;
-    transform: none !important;
-}
-
-@keyframes slideDown {
-    from {
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
 }
