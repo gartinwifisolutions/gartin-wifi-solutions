@@ -838,34 +838,63 @@ nav ul li a.cta-button:hover {
 
 /* Consultation Form Styles */
 .consultation-container {
-    max-width: 600px;
+    max-width: 800px;
     margin: 2rem auto;
-    padding: 2rem;
+    padding: 2.5rem;
     background: rgba(26, 26, 26, 0.95);
-    border-radius: 10px;
+    border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 229, 255, 0.1);
     border: 1px solid rgba(0, 229, 255, 0.1);
 }
 
 .consultation-form {
-    display: flex;
-    flex-direction: column;
+    width: 100%;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .form-group {
     position: relative;
 }
 
+.form-group.full-width {
+    grid-column: span 2;
+}
+
+.form-group.city-group {
+    grid-column: span 1;
+}
+
+.form-group.state-group {
+    width: 80px;
+}
+
+.form-group.zip-group {
+    width: 120px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
 .form-group input,
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 1rem;
+    padding: 0.8rem 1rem;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(0, 229, 255, 0.2);
     border-radius: 6px;
-    color: #FFFFFF;
+    color: var(--text-color);
     font-size: 1rem;
     transition: all 0.3s ease;
 }
@@ -881,7 +910,7 @@ nav ul li a.cta-button:hover {
 .form-group input::placeholder,
 .form-group select::placeholder,
 .form-group textarea::placeholder {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.4);
 }
 
 .form-group select {
@@ -900,7 +929,10 @@ nav ul li a.cta-button:hover {
 
 .consultation-form .cta-button {
     width: 100%;
-    padding: 1rem;
+    max-width: 300px;
+    margin: 1rem auto;
+    display: block;
+    padding: 1rem 2rem;
     background-color: var(--primary-color);
     color: var(--secondary-color);
     border: none;
@@ -910,11 +942,10 @@ nav ul li a.cta-button:hover {
     letter-spacing: 0.5px;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: 1rem;
 }
 
 .consultation-form .cta-button:hover {
-    background-color: #FFFFFF;
+    background-color: var(--text-color);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
 }
@@ -924,11 +955,32 @@ nav ul li a.cta-button:hover {
         margin: 1rem;
         padding: 1.5rem;
     }
-    
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .form-group.full-width {
+        grid-column: span 1;
+    }
+
+    .form-group.city-group,
+    .form-group.state-group,
+    .form-group.zip-group {
+        width: 100%;
+    }
+
     .form-group input,
     .form-group select,
     .form-group textarea {
         font-size: 16px; /* Prevents zoom on iPhone */
+        padding: 0.8rem;
+    }
+
+    .consultation-form .cta-button {
+        width: 100%;
+        max-width: none;
     }
 }
 
