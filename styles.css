@@ -1011,6 +1011,62 @@ nav ul li a.cta-button:hover {
     }
 }
 
+/* Professional CTA Button Styles */
+.cta-button {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
+}
+
+.cta-button:hover,
+.cta-button:focus {
+    background-color: var(--text-color);
+    color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 229, 255, 0.3);
+}
+
+@media screen and (max-width: 768px) {
+    .cta-button {
+        width: auto;
+        min-width: 200px;
+        text-align: center;
+        margin: 1rem auto;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    nav ul li a.cta-button {
+        display: inline-block;
+        background-color: var(--primary-color);
+        color: var(--secondary-color);
+        padding: 1rem 2rem;
+        margin: 1.5rem auto;
+        border-radius: 8px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    nav ul li a.cta-button:hover,
+    nav ul li a.cta-button:active,
+    nav ul li a.cta-button:focus {
+        background-color: var(--text-color);
+        color: var(--secondary-color);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 229, 255, 0.3);
+    }
+}
+
 /* Submit Button Styles */
 .submit-btn {
     background-color: var(--primary-color);
