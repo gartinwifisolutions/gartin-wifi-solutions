@@ -15,9 +15,12 @@
             <a href="index.html" class="logo">
                 <img src="assets/logo.png" alt="Gartin WiFi Solutions Logo">
             </a>
-            <button class="mobile-menu-btn" aria-label="Toggle mobile menu">
-                <span class="menu-icon"></span>
-            </button>
+            <ul class="nav-links">
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#why-us">Why Choose Us</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
@@ -105,14 +108,10 @@
     <script src="script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const menuBtn = document.querySelector('.mobile-menu-btn');
             const menuIcon = document.querySelector('.menu-icon');
             const mobileMenu = document.querySelector('.mobile-menu');
             
-            menuBtn.addEventListener('click', function() {
-                menuIcon.classList.toggle('active');
-                mobileMenu.classList.toggle('active');
-            });
+            // Removed event listener for menu button
         });
     </script>
 </body>
