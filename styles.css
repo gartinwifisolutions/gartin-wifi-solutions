@@ -112,37 +112,6 @@ a {
     box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
 }
 
-.mobile-menu-btn {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-    position: absolute;
-    right: 2rem;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-@media (max-width: 768px) {
-    .nav-container {
-        padding: 1rem;
-    }
-
-    .logo {
-        left: 1rem;
-    }
-
-    .nav-links {
-        display: none;
-    }
-
-    .mobile-menu-btn {
-        display: block;
-        right: 1rem;
-    }
-}
-
 .menu-icon {
     display: block;
     width: 24px;
@@ -164,12 +133,10 @@ a {
 
 .menu-icon::before {
     top: -6px;
-    transform-origin: center;
 }
 
 .menu-icon::after {
     bottom: -6px;
-    transform-origin: center;
 }
 
 .menu-icon.active {
@@ -184,6 +151,33 @@ a {
     transform: translateY(-6px) rotate(-45deg);
 }
 
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001;
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 1rem;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+        position: fixed;
+        top: 1.25rem;
+        right: 1rem;
+    }
+}
+
+/* Mobile Menu */
 .mobile-menu {
     display: none;
     position: fixed;
@@ -195,6 +189,22 @@ a {
     z-index: 999;
     border-bottom: 1px solid rgba(0, 229, 255, 0.1);
     backdrop-filter: blur(10px);
+}
+
+.mobile-menu.active {
+    display: block;
+    animation: slideDown 0.3s ease-out forwards;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .mobile-menu a {
@@ -230,24 +240,6 @@ a {
     background-color: var(--text-color);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
-}
-
-@media (max-width: 768px) {
-    .mobile-menu.active {
-        display: block;
-        animation: slideDown 0.3s ease-out forwards;
-    }
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 /* Hero Section */

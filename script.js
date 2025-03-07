@@ -229,6 +229,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Mobile menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const menuIcon = document.querySelector('.menu-icon');
+    const mobileMenu = document.querySelector('.mobile-menu');
+
+    mobileMenuBtn.addEventListener('click', function() {
+        menuIcon.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+    });
+});
+
 // Scroll animations
 const createScrollAnimations = () => {
     const observerOptions = {
