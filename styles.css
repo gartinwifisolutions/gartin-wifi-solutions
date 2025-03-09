@@ -82,6 +82,7 @@ a {
     right: 2rem;
     top: 50%;
     transform: translateY(-50%);
+    z-index: 2;
 }
 
 .nav-links {
@@ -119,25 +120,39 @@ a {
 
     .nav-links {
         display: none;
-        position: absolute;
-        top: 100%;
+        position: fixed;
+        top: 60px;
         left: 0;
         right: 0;
         background: rgba(26, 26, 26, 0.98);
         flex-direction: column;
         padding: 1rem 0;
-        gap: 1rem;
+        gap: 0;
         border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
     }
 
     .nav-links.active {
         display: flex;
+        opacity: 1;
+        transform: translateY(0);
     }
 
     .nav-links a {
-        padding: 0.5rem 2rem;
+        padding: 1rem 2rem;
         width: 100%;
         text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-links a:hover {
+        background: rgba(0, 229, 255, 0.1);
+    }
+
+    .nav-links li:last-child a {
+        border-bottom: none;
     }
 }
 
@@ -156,7 +171,7 @@ a {
 
     .nav-links a {
         font-size: 0.85rem;
-        padding: 0.5rem 1rem;
+        padding: 0.8rem 1rem;
     }
 }
 

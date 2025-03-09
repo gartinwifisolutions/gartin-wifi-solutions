@@ -14,23 +14,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelector('.nav-links');
 
     if (menuButton && navLinks) {
-        menuButton.addEventListener('click', function() {
+        // Handle menu button clicks
+        menuButton.addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevent document click from immediately closing menu
             navLinks.classList.toggle('active');
             menuButton.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
         });
 
-        // Close menu when clicking outside
+        // Close menu when clicking anywhere outside
         document.addEventListener('click', function(event) {
-            if (!event.target.closest('.nav-container')) {
+            const isClickInside = navLinks.contains(event.target) || menuButton.contains(event.target);
+            if (!isClickInside && navLinks.classList.contains('active')) {
                 navLinks.classList.remove('active');
                 menuButton.textContent = '☰';
             }
         });
 
         // Close menu when clicking a link
-        navLinks.addEventListener('click', function() {
-            navLinks.classList.remove('active');
-            menuButton.textContent = '☰';
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.classList.remove('active');
+                menuButton.textContent = '☰';
+            });
         });
     }
 });
