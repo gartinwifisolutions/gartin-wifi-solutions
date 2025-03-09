@@ -8,42 +8,32 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Mobile navigation toggle
-const createMobileNav = () => {
-    const nav = document.querySelector('.nav-container');
-    const mobileMenuBtn = document.createElement('button');
-    mobileMenuBtn.className = 'mobile-menu-btn';
-    mobileMenuBtn.innerHTML = '☰';
-    mobileMenuBtn.style.display = 'none';
+// Mobile menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const menuButton = document.querySelector('.menu-button');
+    const navLinks = document.querySelector('.nav-links');
 
-    // Add mobile menu button styles
-    const style = document.createElement('style');
-    style.textContent = `
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block !important;
-                font-size: 1.5rem;
-                background: none;
-                border: none;
-                color: var(--primary-color);
-                cursor: pointer;
-                position: absolute;
-                right: 1rem;
-                top: 1rem;
-            }
-            .nav-links {
-                display: none !important;
-            }
-            .nav-links.active {
-                display: flex !important;
-            }
-        }
-    `;
-    document.head.appendChild(style);
+    if (menuButton && navLinks) {
+        menuButton.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            menuButton.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+        });
 
-    // Insert button into nav
-    nav.insertBefore(mobileMenuBtn, nav.firstChild);
-};
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.nav-container')) {
+                navLinks.classList.remove('active');
+                menuButton.textContent = '☰';
+            }
+        });
+
+        // Close menu when clicking a link
+        navLinks.addEventListener('click', function() {
+            navLinks.classList.remove('active');
+            menuButton.textContent = '☰';
+        });
+    }
+});
 
 // Contact form handling
 document.addEventListener('DOMContentLoaded', function() {
@@ -200,72 +190,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Mobile menu functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const menuButton = document.querySelector('.menu-button');
-    const navLinks = document.querySelector('.nav-links');
-
-    menuButton.addEventListener('click', function() {
-        navLinks.classList.toggle('active');
-        menuButton.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
-    });
-
-    // Close menu when clicking outside
-    document.addEventListener('click', function(event) {
-        if (!event.target.closest('.nav-container')) {
-            navLinks.classList.remove('active');
-            menuButton.textContent = '☰';
-        }
-    });
-
-    // Close menu when clicking a link
-    navLinks.addEventListener('click', function() {
-        navLinks.classList.remove('active');
-        menuButton.textContent = '☰';
-    });
-});
-
-// Mobile Menu Handler with Military Precision
-document.addEventListener('DOMContentLoaded', () => {
-    const menuToggle = document.querySelector('.menu-toggle');
-    const nav = document.querySelector('nav ul');
-    
-    if (menuToggle && nav) {
-        menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('active');
-            nav.classList.toggle('active');
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!nav.contains(e.target) && !menuToggle.contains(e.target) && nav.classList.contains('active')) {
-                menuToggle.classList.remove('active');
-                nav.classList.remove('active');
-            }
-        });
-
-        // Close menu when clicking a link
-        nav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                menuToggle.classList.remove('active');
-                nav.classList.remove('active');
-            });
-        });
-    }
-});
-
-// Mobile menu functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const menuIcon = document.querySelector('.menu-icon');
-    const mobileMenu = document.querySelector('.mobile-menu');
-
-    mobileMenuBtn.addEventListener('click', function() {
-        menuIcon.classList.toggle('active');
-        mobileMenu.classList.toggle('active');
-    });
-});
-
 // Scroll animations
 const createScrollAnimations = () => {
     const observerOptions = {
@@ -314,29 +238,6 @@ window.addEventListener('scroll', () => {
 
 // Initialize all features when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    createMobileNav();
-
-    // Initialize mobile navigation
-    const nav = document.querySelector('.nav-container');
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const navLinks = document.querySelector('.nav-links');
-
-    if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            mobileMenuBtn.classList.toggle('active');
-        });
-
-        // Close mobile menu when clicking a link
-        const navLinksItems = document.querySelectorAll('.nav-links a');
-        navLinksItems.forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                mobileMenuBtn.classList.remove('active');
-            });
-        });
-    }
-
     // Initialize scroll animations
     createScrollAnimations();
 });
