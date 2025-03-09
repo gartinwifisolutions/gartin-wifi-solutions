@@ -8,6 +8,7 @@
     --font-heading: 'Montserrat', sans-serif;
     --font-body: 'Roboto', sans-serif;
     --max-width: 1400px;
+    --bubble-color: rgba(0, 229, 255, 0.1);
 }
 
 * {
@@ -53,18 +54,30 @@ a {
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1rem 2rem;
+    padding: 0.5rem 2rem;
 }
 
 .logo {
     display: block;
-    height: 40px;
+    width: auto;
 }
 
 .logo img {
-    height: 100%;
-    width: auto;
+    width: 200px;
+    height: auto;
     display: block;
+}
+
+@media (max-width: 768px) {
+    .logo img {
+        width: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo img {
+        width: 120px;
+    }
 }
 
 .nav-links {
@@ -76,29 +89,96 @@ a {
     list-style: none;
 }
 
-.nav-links li {
-    margin: 0;
-}
-
 .nav-links a {
     color: var(--text-color);
     text-decoration: none;
+    font-size: 0.9rem;
     font-weight: 500;
     transition: color 0.3s ease;
     white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .nav-links a:hover {
     color: var(--primary-color);
 }
 
+.menu-button {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+}
+
 @media (max-width: 768px) {
-    .nav-container {
-        padding: 1rem;
+    .logo {
+        width: 25px;
+    }
+
+    .menu-button {
+        display: block;
     }
 
     .nav-links {
         display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(26, 26, 26, 0.98);
+        flex-direction: column;
+        padding: 1rem 0;
+        gap: 1rem;
+        border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links a {
+        padding: 0.5rem 2rem;
+        width: 100%;
+        text-align: left;
+    }
+
+    .nav-links li:last-child {
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-links li:last-child::before {
+        display: none;
+    }
+
+    .nav-links li:last-child a {
+        padding: 0.5rem 2rem;
+        border-radius: 0;
+        background: none;
+    }
+
+    .nav-links li:last-child a:hover {
+        background: rgba(0, 229, 255, 0.1);
+        transform: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        width: 22px;
+    }
+
+    .nav-container {
+        padding: 0.5rem 1rem;
+    }
+
+    .nav-links a {
+        font-size: 0.85rem;
+        padding: 0.5rem 1rem;
     }
 }
 
@@ -1197,4 +1277,292 @@ a {
     font-size: 1.1rem;
     line-height: 1.6;
     margin-bottom: 2rem;
+}
+
+/* Contact Link Styles */
+.contact-link {
+    position: relative;
+    padding: 0.5rem;
+    margin: -0.5rem;
+}
+
+.contact-link::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 180%;
+    height: 200%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle at center, var(--primary-color) 0%, rgba(0, 229, 255, 0) 75%);
+    opacity: 0.25;
+    border-radius: 50%;
+    z-index: -1;
+    pointer-events: none;
+    animation: pulseGlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+    0% {
+        opacity: 0.2;
+        transform: translate(-50%, -50%) scale(0.95);
+    }
+    50% {
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(1.05);
+    }
+    100% {
+        opacity: 0.2;
+        transform: translate(-50%, -50%) scale(0.95);
+    }
+}
+
+.contact-link a {
+    padding: 0.6rem 1.4rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.contact-link a:hover {
+    color: var(--primary-color);
+    background: rgba(0, 229, 255, 0.2);
+    transform: translateY(-1px);
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+    .contact-link::before {
+        width: 150%;
+        height: 180%;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-link::before {
+        width: 140%;
+        height: 160%;
+    }
+}
+
+/* Reviews Section Styles */
+.reviews-section {
+    padding: 120px 0 60px;
+    background: var(--dark-bg);
+}
+
+.reviews-section .container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.reviews-section h1 {
+    font-size: 2.5rem;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.section-description {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 3rem;
+    font-size: 1.1rem;
+}
+
+/* Review Form Styles */
+.review-form-container {
+    background: rgba(26, 26, 26, 0.95);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 4rem;
+    border: 1px solid rgba(0, 229, 255, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.review-form-container h2 {
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    padding: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-color);
+    font-family: var(--font-body);
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.1);
+}
+
+/* Star Rating Styles */
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 0.5rem;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    cursor: pointer;
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.2);
+    transition: color 0.2s ease;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input:checked ~ label {
+    color: var(--primary-color);
+}
+
+.submit-btn {
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    align-self: flex-start;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 229, 255, 0.3);
+}
+
+/* Reviews Display Styles */
+.reviews-container {
+    margin-top: 4rem;
+}
+
+.reviews-container h2 {
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+}
+
+.reviews-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.review-card {
+    background: rgba(26, 26, 26, 0.95);
+    border-radius: 10px;
+    padding: 1.5rem;
+    border: 1px solid rgba(0, 229, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+}
+
+.review-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.review-header h3 {
+    color: var(--text-color);
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.stars {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.review-date {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    margin-left: auto;
+}
+
+.review-card p {
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .reviews-section {
+        padding: 100px 0 40px;
+    }
+
+    .reviews-section .container {
+        padding: 0 1.5rem;
+    }
+
+    .reviews-section h1 {
+        font-size: 2rem;
+    }
+
+    .review-form-container {
+        padding: 1.5rem;
+    }
+
+    .reviews-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .reviews-section {
+        padding: 80px 0 30px;
+    }
+
+    .reviews-section .container {
+        padding: 0 1rem;
+    }
+
+    .reviews-section h1 {
+        font-size: 1.8rem;
+    }
+
+    .submit-btn {
+        width: 100%;
+    }
 }

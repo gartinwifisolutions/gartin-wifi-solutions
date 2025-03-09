@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Reviews - Gartin WiFi Solutions</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.png" alt="Gartin WiFi Solutions Logo">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#why-us">Why Choose Us</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li class="contact-link"><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section">
+        <div class="container">
+            <h1>Customer Reviews</h1>
+            <p class="section-description">Read what our customers say about our services or share your own experience.</p>
+            
+            <!-- Review Form -->
+            <div class="review-form-container">
+                <h2>Share Your Experience</h2>
+                <form id="reviewForm" class="review-form">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rating">Rating:</label>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5" required>
+                            <label for="star5">★</label>
+                            <input type="radio" id="star4" name="rating" value="4">
+                            <label for="star4">★</label>
+                            <input type="radio" id="star3" name="rating" value="3">
+                            <label for="star3">★</label>
+                            <input type="radio" id="star2" name="rating" value="2">
+                            <label for="star2">★</label>
+                            <input type="radio" id="star1" name="rating" value="1">
+                            <label for="star1">★</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="review">Your Review:</label>
+                        <textarea id="review" name="review" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit Review</button>
+                </form>
+            </div>
+
+            <!-- Reviews Display -->
+            <div class="reviews-container">
+                <h2>What Our Customers Say</h2>
+                <div id="reviewsList" class="reviews-list">
+                    <!-- Sample reviews -->
+                    <div class="review-card">
+                        <div class="review-header">
+                            <h3>John Smith</h3>
+                            <div class="stars">★★★★★</div>
+                            <span class="review-date">March 1, 2025</span>
+                        </div>
+                        <p>Excellent service! They helped me set up my entire smart home system and the WiFi coverage is perfect throughout the house. Very professional and knowledgeable team.</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <h3>Sarah Johnson</h3>
+                            <div class="stars">★★★★★</div>
+                            <span class="review-date">February 28, 2025</span>
+                        </div>
+                        <p>I was having constant WiFi issues in my home office, but after their consultation and implementation of their solutions, my connection has been rock solid. Highly recommend!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="reviews.js"></script>
+</body>
+</html>

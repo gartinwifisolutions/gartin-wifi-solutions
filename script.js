@@ -200,6 +200,31 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Mobile menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const menuButton = document.querySelector('.menu-button');
+    const navLinks = document.querySelector('.nav-links');
+
+    menuButton.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+        menuButton.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.nav-container')) {
+            navLinks.classList.remove('active');
+            menuButton.textContent = '☰';
+        }
+    });
+
+    // Close menu when clicking a link
+    navLinks.addEventListener('click', function() {
+        navLinks.classList.remove('active');
+        menuButton.textContent = '☰';
+    });
+});
+
 // Mobile Menu Handler with Military Precision
 document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.querySelector('.menu-toggle');
