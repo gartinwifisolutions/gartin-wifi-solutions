@@ -24,6 +24,18 @@
   force = true
 
 [[redirects]]
+  from = "/reviews.html"
+  to = "/customer-reviews.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/reviews"
+  to = "/customer-reviews.html"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
