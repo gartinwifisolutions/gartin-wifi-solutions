@@ -109,6 +109,10 @@
         </div>
     </section>
 
-    <script src="reviews.js"></script>
+    <!-- Force Netlify to serve latest version -->
+    <script>
+        // Add timestamp to force cache refresh
+        document.write('<script src="reviews.js?v=' + Date.now() + '"><\/script>');
+    </script>
 </body>
 </html>
