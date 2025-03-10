@@ -260,6 +260,7 @@
                     // Filter out test reviews but keep real customer reviews
                     const TEST_REVIEW_IDS = [
                         '67cefa4bcb752575d3ff09e0', // John G
+                        '67cef90fcb752575d3ff09dc', // Jeremy S
                         '67cef858cb752575d3ff09d8', // Quick Test
                         '67cef5b6f7aa3369777013bd', // Test Review
                         '67cef46df7aa3369777013b9', // Test User (auto-approval)
@@ -271,7 +272,8 @@
                         const isTest = TEST_REVIEW_IDS.includes(review._id) ||
                                      name.includes('test') || 
                                      name.includes('quick') || 
-                                     name === 'john g';
+                                     name === 'john g' ||
+                                     name === 'jeremy s';
                         console.log(`Review from ${review.name}: ${isTest ? 'filtered out (test)' : 'included'}`);
                         return review.approved && !isTest;
                     });
