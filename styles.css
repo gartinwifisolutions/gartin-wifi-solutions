@@ -115,6 +115,16 @@ a {
     gap: 5px;
 }
 
+.rating-display {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.single-star {
+    color: var(--primary-color);
+    font-size: 1em;
+}
+
 .rating-stars {
     display: inline-block;
     color: #00E5FF;
