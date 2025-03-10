@@ -61,30 +61,39 @@
             transform: translateY(-2px);
         }
         .review-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 15px;
             margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
         }
         .review-header h3 {
             margin: 0;
             color: #00e5ff;
             font-size: 1.2em;
+            grid-column: 1;
+        }
+        .review-rating {
+            grid-column: 2;
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
         }
         .stars {
             color: #00e5ff;
             letter-spacing: 2px;
+            font-size: 1.1em;
         }
         .review-date {
             color: #888;
-            font-size: 0.9em;
+            font-size: 0.85em;
         }
         .review-card p {
             color: #fff;
             line-height: 1.6;
             margin: 0;
+            grid-column: 1 / -1;
         }
         .no-reviews {
             text-align: center;
@@ -323,8 +332,10 @@
                         <div class="review-card">
                             <div class="review-header">
                                 <h3>${review.name}</h3>
-                                <div class="stars">${'★'.repeat(review.rating)}</div>
-                                <span class="review-date">${date}</span>
+                                <div class="review-rating">
+                                    <div class="stars">${'★'.repeat(review.rating)}</div>
+                                    <span class="review-date">${date}</span>
+                                </div>
                             </div>
                             <p>${review.review}</p>
                         </div>
