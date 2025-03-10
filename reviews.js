@@ -6,15 +6,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Fetch and display reviews
     async function fetchReviews() {
-        reviewsList.innerHTML = '<div class="loading">Loading reviews</div>';
-        
         try {
             console.log('Fetching reviews from:', `${API_URL}/reviews`);
             const response = await fetch(`${API_URL}/reviews`, {
-                cache: 'no-store', // Always get fresh data
+                cache: 'no-store',
                 headers: {
-                    'Cache-Control': 'no-cache',
-                    'Pragma': 'no-cache'
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0'
                 }
             });
             
@@ -49,13 +48,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Display reviews
     function displayReviews(reviews) {
-        reviewsList.innerHTML = '';
-
         if (reviews.length === 0) {
-            const noReviews = document.createElement('div');
-            noReviews.className = 'no-reviews';
-            noReviews.textContent = 'Be the first to leave a review!';
-            reviewsList.appendChild(noReviews);
+            reviewsList.innerHTML = `
+                <div class="no-reviews">
+                    Be the first to leave a review!
+                </div>
+            `;
             return;
         }
 
@@ -63,59 +61,44 @@ document.addEventListener('DOMContentLoaded', function() {
         reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
         console.log('Displaying reviews in order:', reviews.map(r => r.name));
 
-        reviews.forEach(review => {
-            const reviewCard = createReviewCard(review);
-            reviewsList.appendChild(reviewCard);
-        });
-    }
+        const reviewsHtml = reviews.map(review => {
+            const date = new Date(review.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
 
-    // Create a review card element
-    function createReviewCard(review) {
-        const card = document.createElement('div');
-        card.className = 'review-card';
-        
-        const header = document.createElement('div');
-        header.className = 'review-header';
-        
-        const name = document.createElement('h3');
-        name.textContent = review.name;
-        
-        const stars = document.createElement('div');
-        stars.className = 'stars';
-        stars.textContent = '★'.repeat(review.rating);
-        
-        const date = document.createElement('span');
-        date.className = 'review-date';
-        date.textContent = new Date(review.date).toLocaleDateString();
-        
-        const content = document.createElement('p');
-        content.textContent = review.review;
-        
-        header.appendChild(name);
-        header.appendChild(stars);
-        header.appendChild(date);
-        card.appendChild(header);
-        card.appendChild(content);
-        
-        return card;
+            return `
+                <div class="review-card">
+                    <div class="review-header">
+                        <h3>${review.name}</h3>
+                        <div class="stars">${'★'.repeat(review.rating)}</div>
+                        <span class="review-date">${date}</span>
+                    </div>
+                    <p>${review.review}</p>
+                </div>
+            `;
+        }).join('');
+
+        reviewsList.innerHTML = reviewsHtml;
     }
 
     // Show error message
-    function showError(message) {
+    function showError(message, duration = 5000) {
         const errorDiv = document.createElement('div');
         errorDiv.className = 'error-message';
         errorDiv.textContent = message;
         reviewForm.insertAdjacentElement('beforebegin', errorDiv);
-        setTimeout(() => errorDiv.remove(), 5000);
+        setTimeout(() => errorDiv.remove(), duration);
     }
 
     // Show success message
-    function showSuccess(message) {
+    function showSuccess(message, duration = 3000) {
         const successDiv = document.createElement('div');
         successDiv.className = 'success-message';
         successDiv.textContent = message;
         reviewForm.insertAdjacentElement('beforebegin', successDiv);
-        setTimeout(() => successDiv.remove(), 3000);
+        setTimeout(() => successDiv.remove(), duration);
     }
 
     // Handle form submission
@@ -146,8 +129,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cache-Control': 'no-cache',
-                    'Pragma': 'no-cache'
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0'
                 },
                 body: JSON.stringify(newReview)
             });
@@ -158,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Reset form
             reviewForm.reset();
-            showSuccess('Thank you for your review! It is now visible on the page.');
+            showSuccess('Thank you for your review! It will appear on the page shortly.');
             
             // Wait a moment before refreshing reviews to ensure the new review is available
             setTimeout(fetchReviews, 1000);
