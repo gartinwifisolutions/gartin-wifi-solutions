@@ -1,6 +1,8 @@
+# Netlify configuration file
+
 [build]
   publish = "/"
-  command = "npm run build"
+  command = "echo 'No build needed - static site'"
 
 [[headers]]
   for = "/*"
@@ -12,7 +14,7 @@
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
     Content-Security-Policy = "default-src 'self' https: 'unsafe-inline' 'unsafe-eval' https://gartin-wifi-api.onrender.com; img-src 'self' https: data:; font-src 'self' https: data:;"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
-    Cache-Control = "no-store, no-cache, must-revalidate"
+    Cache-Control = "no-cache, no-store, must-revalidate"
     Pragma = "no-cache"
     Expires = "0"
 
@@ -38,3 +40,13 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[build.processing]
+  skip_processing = true
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Ignore server directories during build
+[build.ignore]
+  command = "git diff --quiet HEAD^ HEAD ./server/ ./server-api/ ./admin-dashboard/"
