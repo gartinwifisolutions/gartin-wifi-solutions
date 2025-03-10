@@ -11,7 +11,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error('Failed to fetch reviews');
             }
             const reviews = await response.json();
-            displayReviews(reviews);
+            
+            // Filter out test reviews
+            const filteredReviews = reviews.filter(review => 
+                !review.name.toLowerCase().includes('test') && 
+                review.approved
+            );
+            
+            displayReviews(filteredReviews);
         } catch (error) {
             console.error('Error fetching reviews:', error);
             showError('Unable to load reviews. Please try again later.');
