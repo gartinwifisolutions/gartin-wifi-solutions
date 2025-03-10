@@ -125,14 +125,6 @@ a {
     font-size: 1em;
 }
 
-.rating-stars {
-    display: inline-block;
-    color: #00E5FF;
-    font-size: 1em;
-    margin-left: 2px;
-    vertical-align: baseline;
-}
-
 @media (max-width: 768px) {
     .logo img {
         width: 150px;
