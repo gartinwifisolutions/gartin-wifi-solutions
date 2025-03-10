@@ -15,11 +15,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const reviews = await response.json();
             
-            // Filter out test reviews
-            const filteredReviews = reviews.filter(review => 
-                !review.name.toLowerCase().includes('test') && 
-                review.approved
-            );
+            // Filter out test reviews but keep real customer reviews
+            const filteredReviews = reviews.filter(review => {
+                const name = review.name.toLowerCase();
+                return review.approved && 
+                       !name.includes('test') && 
+                       !name.includes('quick');
+            });
             
             displayReviews(filteredReviews);
         } catch (error) {
