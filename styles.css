@@ -109,6 +109,20 @@ a {
     color: var(--primary-color);
 }
 
+.reviews-link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.rating-stars {
+    display: inline-block;
+    color: #00E5FF;
+    font-size: 0.9em;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
 @media (max-width: 768px) {
     .logo img {
         width: 150px;

@@ -46,6 +46,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Calculate and display average rating
+    function updateAverageRating(reviews) {
+        const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
+        const averageRating = (totalRating / reviews.length).toFixed(1);
+        const ratingElement = document.getElementById('average-rating');
+        if (ratingElement) {
+            const stars = '★'.repeat(Math.round(averageRating)) + '☆'.repeat(5 - Math.round(averageRating));
+            ratingElement.innerHTML = `${stars} ${averageRating}`;
+        }
+    }
+
     // Display reviews
     function displayReviews(reviews) {
         if (reviews.length === 0) {
@@ -56,6 +67,8 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             return;
         }
+
+        updateAverageRating(reviews);
 
         // Sort reviews by date (newest first)
         reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
