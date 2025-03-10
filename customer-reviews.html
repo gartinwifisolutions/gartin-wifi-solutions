@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Expires" content="-1">
     <title>Customer Reviews - Gartin WiFi Solutions</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
@@ -241,12 +241,13 @@
             async function fetchReviews() {
                 try {
                     console.log('Fetching reviews from:', `${API_URL}/reviews`);
-                    const response = await fetch(`${API_URL}/reviews`, {
+                    const timestamp = new Date().getTime();
+                    const response = await fetch(`${API_URL}/reviews?_=${timestamp}`, {
                         cache: 'no-store',
                         headers: {
-                            'Cache-Control': 'no-cache, no-store, must-revalidate',
+                            'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
                             'Pragma': 'no-cache',
-                            'Expires': '0'
+                            'Expires': '-1'
                         }
                     });
                     
@@ -267,15 +268,19 @@
                         '67cee55d3fd53b8f26bb8708'  // Test User (unapproved)
                     ];
 
+                    const TEST_NAMES = ['john g', 'jeremy s', 'test', 'quick'];
+
                     const filteredReviews = reviews.filter(review => {
-                        const name = review.name.toLowerCase();
-                        const isTest = TEST_REVIEW_IDS.includes(review._id) ||
-                                     name.includes('test') || 
-                                     name.includes('quick') || 
-                                     name === 'john g' ||
-                                     name === 'jeremy s';
-                        console.log(`Review from ${review.name}: ${isTest ? 'filtered out (test)' : 'included'}`);
-                        return review.approved && !isTest;
+                        if (!review.approved) return false;
+                        
+                        const name = review.name.toLowerCase().trim();
+                        const isTestId = TEST_REVIEW_IDS.includes(review._id);
+                        const isTestName = TEST_NAMES.some(testName => name.includes(testName));
+                        const isFiltered = isTestId || isTestName;
+                        
+                        console.log(`Review ${review._id} from "${review.name}": ${isFiltered ? 'filtered out' : 'included'} (TestID: ${isTestId}, TestName: ${isTestName})`);
+                        
+                        return !isFiltered;
                     });
                     
                     console.log('Filtered reviews:', filteredReviews);
@@ -375,9 +380,9 @@
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Cache-Control': 'no-cache, no-store, must-revalidate',
+                            'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
                             'Pragma': 'no-cache',
-                            'Expires': '0'
+                            'Expires': '-1'
                         },
                         body: JSON.stringify(newReview)
                     });
