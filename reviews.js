@@ -6,27 +6,44 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Fetch and display reviews
     async function fetchReviews() {
+        reviewsList.innerHTML = '<div class="loading">Loading reviews</div>';
+        
         try {
+            console.log('Fetching reviews from:', `${API_URL}/reviews`);
             const response = await fetch(`${API_URL}/reviews`, {
-                cache: 'no-store' // Always get fresh data
+                cache: 'no-store', // Always get fresh data
+                headers: {
+                    'Cache-Control': 'no-cache',
+                    'Pragma': 'no-cache'
+                }
             });
+            
             if (!response.ok) {
-                throw new Error('Failed to fetch reviews');
+                throw new Error(`Failed to fetch reviews: ${response.status} ${response.statusText}`);
             }
+            
             const reviews = await response.json();
+            console.log('Received reviews:', reviews);
             
             // Filter out test reviews but keep real customer reviews
             const filteredReviews = reviews.filter(review => {
                 const name = review.name.toLowerCase();
-                return review.approved && 
-                       !name.includes('test') && 
-                       !name.includes('quick');
+                const isTest = name.includes('test') || name.includes('quick');
+                console.log(`Review from ${review.name}: ${isTest ? 'filtered out (test)' : 'included'}`);
+                return review.approved && !isTest;
             });
             
+            console.log('Filtered reviews:', filteredReviews);
             displayReviews(filteredReviews);
         } catch (error) {
             console.error('Error fetching reviews:', error);
-            showError('Unable to load reviews. Please try again later.');
+            reviewsList.innerHTML = `
+                <div class="error-message">
+                    Unable to load reviews. Please try refreshing the page.
+                    <br>
+                    Error: ${error.message}
+                </div>
+            `;
         }
     }
 
@@ -44,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Sort reviews by date (newest first)
         reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+        console.log('Displaying reviews in order:', reviews.map(r => r.name));
 
         reviews.forEach(review => {
             const reviewCard = createReviewCard(review);
@@ -114,6 +132,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const rating = document.querySelector('input[name="rating"]:checked').value;
             const review = document.getElementById('review').value;
 
+            console.log('Submitting review for:', name);
+
             // Create review object
             const newReview = {
                 name: name.trim(),
@@ -125,7 +145,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const response = await fetch(`${API_URL}/reviews`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Pragma': 'no-cache'
                 },
                 body: JSON.stringify(newReview)
             });
@@ -158,6 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Refresh when page becomes visible again
     document.addEventListener('visibilitychange', function() {
         if (document.visibilityState === 'visible') {
+            console.log('Page became visible, refreshing reviews');
             fetchReviews();
         }
     });

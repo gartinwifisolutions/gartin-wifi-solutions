@@ -12,6 +12,9 @@
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
     Content-Security-Policy = "default-src 'self' https: 'unsafe-inline' 'unsafe-eval' https://gartin-wifi-api.onrender.com; img-src 'self' https: data:; font-src 'self' https: data:;"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    Cache-Control = "no-store, no-cache, must-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
 
 # Force HTTPS
 [[redirects]]
@@ -19,3 +22,19 @@
   to = "https://:splat"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://gartin-wifi-api.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
