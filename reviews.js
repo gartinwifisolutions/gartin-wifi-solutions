@@ -18,8 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const averageRating = (totalRating / reviews.length).toFixed(1);
         const ratingElement = document.getElementById('average-rating');
         if (ratingElement) {
-            const stars = '★'.repeat(Math.round(averageRating)) + '☆'.repeat(5 - Math.round(averageRating));
-            ratingElement.innerHTML = `${stars} ${averageRating}`;
+            ratingElement.innerHTML = `★ <strong>${averageRating}</strong>`;
         }
     }
 
