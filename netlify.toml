@@ -13,10 +13,10 @@
     Content-Security-Policy = "default-src 'self' https: 'unsafe-inline' 'unsafe-eval' https://gartin-wifi-api.onrender.com; img-src 'self' https: data:; font-src 'self' https: data:;"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
 
-# Serve admin files directly
+# Serve static files directly
 [[redirects]]
-  from = "/admin/*"
-  to = "/admin/:splat"
+  from = "/admin/reviews.html"
+  to = "/admin/reviews.html"
   status = 200
 
 # All other routes to SPA
@@ -24,7 +24,6 @@
   from = "/*"
   to = "/index.html"
   status = 200
-  force = false
 
 [build.environment]
   NODE_VERSION = "18.0.0"
