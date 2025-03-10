@@ -13,10 +13,18 @@
     Content-Security-Policy = "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' https: data:; font-src 'self' https: data:;"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
 
+# Admin routes should be served directly
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/:splat"
+  status = 200
+
+# All other routes go to index.html for SPA routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+  conditions = {Path = {exclude = ["/admin/**"]}}
 
 [build.environment]
   NODE_VERSION = "18.0.0"
