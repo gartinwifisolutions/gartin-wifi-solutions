@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Management - Gartin WiFi Solutions</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 120px auto 60px;
+            padding: 0 20px;
+        }
+
+        .review-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            background: rgba(26, 26, 26, 0.95);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .review-table th,
+        .review-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .review-table th {
+            background: rgba(0, 229, 255, 0.1);
+            font-weight: 600;
+        }
+
+        .review-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .status-approved {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .approve-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .approve-btn:hover {
+            background: #218838;
+        }
+
+        .reject-btn {
+            background: #dc3545;
+            color: white;
+            margin-left: 0.5rem;
+        }
+
+        .reject-btn:hover {
+            background: #c82333;
+        }
+
+        .stars {
+            color: #ffc107;
+        }
+
+        .error-message {
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .success-message {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .api-key-form {
+            margin-bottom: 2rem;
+            background: rgba(26, 26, 26, 0.95);
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .api-key-form input {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-color);
+            border-radius: 5px;
+        }
+
+        .api-key-form button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .api-key-form button:hover {
+            background: var(--primary-color-dark);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <img src="../assets/logo.png" alt="Gartin WiFi Solutions Logo">
+            </a>
+            <button class="menu-button">☰</button>
+            <ul class="nav-links">
+                <li><a href="../index.html">Back to Website</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <h1>Review Management</h1>
+        
+        <div class="api-key-form">
+            <h2>API Key</h2>
+            <input type="password" id="apiKey" placeholder="Enter your API key">
+            <button onclick="saveApiKey()">Save API Key</button>
+        </div>
+
+        <div id="messageContainer"></div>
+        
+        <table class="review-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Name</th>
+                    <th>Rating</th>
+                    <th>Review</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="reviewsTableBody">
+                <!-- Reviews will be loaded here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const API_URL = 'https://gartin-wifi-api.onrender.com/api';
+            const reviewsTableBody = document.getElementById('reviewsTableBody');
+            const messageContainer = document.getElementById('messageContainer');
+
+            // Show message function
+            function showMessage(message, isError = false) {
+                const div = document.createElement('div');
+                div.className = isError ? 'error-message' : 'success-message';
+                div.textContent = message;
+                messageContainer.innerHTML = '';
+                messageContainer.appendChild(div);
+                setTimeout(() => div.remove(), 5000);
+            }
+
+            // Save API key
+            window.saveApiKey = function() {
+                const apiKey = document.getElementById('apiKey').value;
+                if (apiKey) {
+                    localStorage.setItem('adminApiKey', apiKey);
+                    showMessage('API key saved successfully');
+                    fetchReviews();
+                } else {
+                    showMessage('Please enter an API key', true);
+                }
+            }
+
+            // Get API key
+            function getApiKey() {
+                return localStorage.getItem('adminApiKey');
+            }
+
+            async function fetchReviews() {
+                const apiKey = getApiKey();
+                if (!apiKey) {
+                    showMessage('Please enter your API key', true);
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`${API_URL}/admin/reviews`, {
+                        headers: {
+                            'X-API-Key': apiKey
+                        }
+                    });
+
+                    if (!response.ok) {
+                        if (response.status === 401) {
+                            showMessage('Invalid API key. Please check your key and try again.', true);
+                            return;
+                        }
+                        throw new Error('Failed to fetch reviews');
+                    }
+
+                    const reviews = await response.json();
+                    displayReviews(reviews);
+                } catch (error) {
+                    console.error('Error fetching reviews:', error);
+                    showMessage('Error loading reviews. Please try again.', true);
+                }
+            }
+
+            function displayReviews(reviews) {
+                reviewsTableBody.innerHTML = '';
+                
+                if (reviews.length === 0) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = '<td colspan="6" style="text-align: center;">No reviews found</td>';
+                    reviewsTableBody.appendChild(row);
+                    return;
+                }
+
+                reviews.forEach(review => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${new Date(review.date).toLocaleDateString()}</td>
+                        <td>${review.name}</td>
+                        <td><div class="stars">${'★'.repeat(review.rating)}</div></td>
+                        <td>${review.review}</td>
+                        <td>
+                            <span class="status-badge ${review.approved ? 'status-approved' : 'status-pending'}">
+                                ${review.approved ? 'Approved' : 'Pending'}
+                            </span>
+                        </td>
+                        <td>
+                            ${!review.approved ? 
+                                `<button class="action-btn approve-btn" onclick="approveReview('${review._id}')">
+                                    Approve
+                                </button>` : 
+                                `<button class="action-btn reject-btn" onclick="rejectReview('${review._id}')">
+                                    Reject
+                                </button>`
+                            }
+                        </td>
+                    `;
+                    reviewsTableBody.appendChild(row);
+                });
+            }
+
+            window.approveReview = async function(id) {
+                const apiKey = getApiKey();
+                if (!apiKey) {
+                    showMessage('Please enter your API key', true);
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`${API_URL}/admin/reviews/${id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-API-Key': apiKey
+                        },
+                        body: JSON.stringify({ approved: true })
+                    });
+
+                    if (!response.ok) {
+                        if (response.status === 401) {
+                            showMessage('Invalid API key', true);
+                            return;
+                        }
+                        throw new Error('Failed to approve review');
+                    }
+
+                    showMessage('Review approved successfully');
+                    fetchReviews();
+                } catch (error) {
+                    console.error('Error approving review:', error);
+                    showMessage('Error approving review', true);
+                }
+            };
+
+            window.rejectReview = async function(id) {
+                const apiKey = getApiKey();
+                if (!apiKey) {
+                    showMessage('Please enter your API key', true);
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`${API_URL}/admin/reviews/${id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-API-Key': apiKey
+                        },
+                        body: JSON.stringify({ approved: false })
+                    });
+
+                    if (!response.ok) {
+                        if (response.status === 401) {
+                            showMessage('Invalid API key', true);
+                            return;
+                        }
+                        throw new Error('Failed to reject review');
+                    }
+
+                    showMessage('Review rejected successfully');
+                    fetchReviews();
+                } catch (error) {
+                    console.error('Error rejecting review:', error);
+                    showMessage('Error rejecting review', true);
+                }
+            };
+
+            // Check for saved API key and fetch reviews
+            const savedApiKey = getApiKey();
+            if (savedApiKey) {
+                document.getElementById('apiKey').value = savedApiKey;
+                fetchReviews();
+            }
+        });
+    </script>
+</body>
+</html>

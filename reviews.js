@@ -1,24 +1,38 @@
 document.addEventListener('DOMContentLoaded', function() {
     const reviewForm = document.getElementById('reviewForm');
     const reviewsList = document.getElementById('reviewsList');
+    const API_URL = 'https://gartin-wifi-api.onrender.com/api';
 
-    // Load existing reviews from localStorage
-    let reviews = JSON.parse(localStorage.getItem('reviews') || '[]');
+    // Fetch and display reviews
+    async function fetchReviews() {
+        try {
+            const response = await fetch(`${API_URL}/reviews`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch reviews');
+            }
+            const reviews = await response.json();
+            displayReviews(reviews);
+        } catch (error) {
+            console.error('Error fetching reviews:', error);
+            showError('Unable to load reviews. Please try again later.');
+        }
+    }
 
-    // Display existing reviews
-    function displayReviews() {
-        // Sort reviews by date, newest first
-        reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-        // Clear the reviews list except for the sample reviews
-        const sampleReviews = Array.from(reviewsList.children);
+    // Display reviews
+    function displayReviews(reviews) {
         reviewsList.innerHTML = '';
-        sampleReviews.forEach(review => reviewsList.appendChild(review));
 
-        // Add stored reviews
+        if (reviews.length === 0) {
+            const noReviews = document.createElement('div');
+            noReviews.className = 'no-reviews';
+            noReviews.textContent = 'Be the first to leave a review!';
+            reviewsList.appendChild(noReviews);
+            return;
+        }
+
         reviews.forEach(review => {
             const reviewCard = createReviewCard(review);
-            reviewsList.insertBefore(reviewCard, reviewsList.firstChild);
+            reviewsList.appendChild(reviewCard);
         });
     }
 
@@ -53,39 +67,73 @@ document.addEventListener('DOMContentLoaded', function() {
         return card;
     }
 
+    // Show error message
+    function showError(message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.textContent = message;
+        reviewForm.insertAdjacentElement('beforebegin', errorDiv);
+        setTimeout(() => errorDiv.remove(), 5000);
+    }
+
+    // Show success message
+    function showSuccess(message) {
+        const successDiv = document.createElement('div');
+        successDiv.className = 'success-message';
+        successDiv.textContent = message;
+        reviewForm.insertAdjacentElement('beforebegin', successDiv);
+        setTimeout(() => successDiv.remove(), 5000);
+    }
+
     // Handle form submission
-    reviewForm.addEventListener('submit', function(e) {
+    reviewForm.addEventListener('submit', async function(e) {
         e.preventDefault();
 
-        // Get form values
-        const name = document.getElementById('name').value;
-        const rating = document.querySelector('input[name="rating"]:checked').value;
-        const review = document.getElementById('review').value;
+        const submitButton = reviewForm.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.textContent = 'Submitting...';
 
-        // Create new review object
-        const newReview = {
-            name: name,
-            rating: parseInt(rating),
-            review: review,
-            date: new Date().toISOString()
-        };
+        try {
+            // Get form values
+            const name = document.getElementById('name').value;
+            const rating = document.querySelector('input[name="rating"]:checked').value;
+            const review = document.getElementById('review').value;
 
-        // Add to reviews array
-        reviews.push(newReview);
+            // Create review object
+            const newReview = {
+                name: name.trim(),
+                rating: parseInt(rating),
+                review: review.trim()
+            };
 
-        // Save to localStorage
-        localStorage.setItem('reviews', JSON.stringify(reviews));
+            // Submit review to backend
+            const response = await fetch(`${API_URL}/reviews`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newReview)
+            });
 
-        // Display updated reviews
-        displayReviews();
+            if (!response.ok) {
+                throw new Error('Failed to submit review');
+            }
 
-        // Reset form
-        reviewForm.reset();
-
-        // Show success message
-        alert('Thank you for your review!');
+            // Reset form
+            reviewForm.reset();
+            showSuccess('Thank you for your review! It will be visible after approval.');
+            
+            // Refresh reviews
+            fetchReviews();
+        } catch (error) {
+            console.error('Error submitting review:', error);
+            showError('Sorry, there was an error submitting your review. Please try again.');
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Submit Review';
+        }
     });
 
-    // Initial display of reviews
-    displayReviews();
+    // Initial fetch of reviews
+    fetchReviews();
 });
