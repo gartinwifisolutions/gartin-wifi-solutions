@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build": "echo 'No build step required - static site'",
+    "build": "powershell -Command \"Copy-Item -Path ./admin/* -Destination ./ -Recurse -Force\"",
     "deploy": "netlify deploy --prod"
   },
   "keywords": [
