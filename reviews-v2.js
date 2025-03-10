@@ -4,6 +4,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const API_URL = 'https://gartin-wifi-api.onrender.com/api';
     const REFRESH_INTERVAL = 30000; // Refresh every 30 seconds
 
+    // Calculate and display average rating
+    function updateAverageRating(reviews) {
+        if (!reviews || reviews.length === 0) {
+            const ratingElement = document.getElementById('average-rating');
+            if (ratingElement) {
+                ratingElement.innerHTML = '';
+            }
+            return;
+        }
+
+        const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
+        const averageRating = (totalRating / reviews.length).toFixed(1);
+        const ratingElement = document.getElementById('average-rating');
+        if (ratingElement) {
+            ratingElement.innerHTML = averageRating;
+        }
+    }
+
     // Fetch and display reviews
     async function fetchReviews() {
         try {
@@ -33,16 +51,25 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             console.log('Filtered reviews:', filteredReviews);
-            displayReviews(filteredReviews);
+            
+            // Always update the rating in the navigation
+            updateAverageRating(filteredReviews);
+            
+            // Only try to display reviews if we're on the reviews page
+            if (reviewsList) {
+                displayReviews(filteredReviews);
+            }
         } catch (error) {
             console.error('Error fetching reviews:', error);
-            reviewsList.innerHTML = `
-                <div class="error-message">
-                    Unable to load reviews. Please try refreshing the page.
-                    <br>
-                    Error: ${error.message}
-                </div>
-            `;
+            if (reviewsList) {
+                reviewsList.innerHTML = `
+                    <div class="error-message">
+                        Unable to load reviews. Please try refreshing the page.
+                        <br>
+                        Error: ${error.message}
+                    </div>
+                `;
+            }
         }
     }
 
