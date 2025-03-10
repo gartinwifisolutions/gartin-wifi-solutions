@@ -4,6 +4,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const API_URL = 'https://gartin-wifi-api.onrender.com/api';
     const REFRESH_INTERVAL = 30000; // Refresh every 30 seconds
 
+    // Calculate and display average rating
+    function updateAverageRating(reviews) {
+        const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
+        const averageRating = (totalRating / reviews.length).toFixed(1);
+        const ratingElement = document.getElementById('average-rating');
+        if (ratingElement) {
+            const stars = '★'.repeat(Math.round(averageRating)) + '☆'.repeat(5 - Math.round(averageRating));
+            ratingElement.innerHTML = `${stars} ${averageRating}`;
+        }
+    }
+
     // Fetch and display reviews
     async function fetchReviews() {
         try {
@@ -33,67 +44,53 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             console.log('Filtered reviews:', filteredReviews);
-            displayReviews(filteredReviews);
+            
+            // Always update the rating in the navigation
+            updateAverageRating(filteredReviews);
+            
+            // Only try to display reviews if we're on the reviews page
+            if (reviewsList) {
+                displayReviews(filteredReviews);
+            }
         } catch (error) {
             console.error('Error fetching reviews:', error);
-            reviewsList.innerHTML = `
-                <div class="error-message">
-                    Unable to load reviews. Please try refreshing the page.
-                    <br>
-                    Error: ${error.message}
-                </div>
-            `;
-        }
-    }
-
-    // Calculate and display average rating
-    function updateAverageRating(reviews) {
-        const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
-        const averageRating = (totalRating / reviews.length).toFixed(1);
-        const ratingElement = document.getElementById('average-rating');
-        if (ratingElement) {
-            const stars = '★'.repeat(Math.round(averageRating)) + '☆'.repeat(5 - Math.round(averageRating));
-            ratingElement.innerHTML = `${stars} ${averageRating}`;
+            if (reviewsList) {
+                reviewsList.innerHTML = `
+                    <div class="error-message">
+                        Unable to load reviews. Please try refreshing the page.
+                        <br>
+                        Error: ${error.message}
+                    </div>
+                `;
+            }
         }
     }
 
     // Display reviews
     function displayReviews(reviews) {
         if (reviews.length === 0) {
-            reviewsList.innerHTML = `
-                <div class="no-reviews">
-                    Be the first to leave a review!
-                </div>
-            `;
+            reviewsList.innerHTML = '<p>No reviews yet. Be the first to leave a review!</p>';
             return;
         }
-
-        updateAverageRating(reviews);
 
         // Sort reviews by date (newest first)
         reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
         console.log('Displaying reviews in order:', reviews.map(r => r.name));
 
-        const reviewsHtml = reviews.map(review => {
-            const date = new Date(review.date).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-
-            return `
-                <div class="review-card">
-                    <div class="review-header">
-                        <h3>${review.name}</h3>
-                        <div class="stars">${'★'.repeat(review.rating)}</div>
-                        <span class="review-date">${date}</span>
+        reviewsList.innerHTML = reviews.map(review => `
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-rating">
+                        ${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}
                     </div>
-                    <p>${review.review}</p>
+                    <div class="review-date">
+                        ${new Date(review.date).toLocaleDateString()}
+                    </div>
                 </div>
-            `;
-        }).join('');
-
-        reviewsList.innerHTML = reviewsHtml;
+                <div class="review-name">${review.name}</div>
+                <div class="review-text">${review.text}</div>
+            </div>
+        `).join('');
     }
 
     // Show error message
@@ -101,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const errorDiv = document.createElement('div');
         errorDiv.className = 'error-message';
         errorDiv.textContent = message;
-        reviewForm.insertAdjacentElement('beforebegin', errorDiv);
+        document.body.appendChild(errorDiv);
         setTimeout(() => errorDiv.remove(), duration);
     }
 
@@ -110,75 +107,48 @@ document.addEventListener('DOMContentLoaded', function() {
         const successDiv = document.createElement('div');
         successDiv.className = 'success-message';
         successDiv.textContent = message;
-        reviewForm.insertAdjacentElement('beforebegin', successDiv);
+        document.body.appendChild(successDiv);
         setTimeout(() => successDiv.remove(), duration);
     }
 
-    // Handle form submission
-    reviewForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-
-        const submitButton = reviewForm.querySelector('button[type="submit"]');
-        submitButton.disabled = true;
-        submitButton.textContent = 'Submitting...';
-
-        try {
-            // Get form values
-            const name = document.getElementById('name').value;
-            const rating = document.querySelector('input[name="rating"]:checked').value;
-            const review = document.getElementById('review').value;
-
-            console.log('Submitting review for:', name);
-
-            // Create review object
-            const newReview = {
-                name: name.trim(),
-                rating: parseInt(rating),
-                review: review.trim()
-            };
-
-            // Submit review to backend
-            const response = await fetch(`${API_URL}/reviews`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Cache-Control': 'no-cache, no-store, must-revalidate',
-                    'Pragma': 'no-cache',
-                    'Expires': '0'
-                },
-                body: JSON.stringify(newReview)
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to submit review');
-            }
-
-            // Reset form
-            reviewForm.reset();
-            showSuccess('Thank you for your review! It will appear on the page shortly.');
-            
-            // Wait a moment before refreshing reviews to ensure the new review is available
-            setTimeout(fetchReviews, 1000);
-        } catch (error) {
-            console.error('Error submitting review:', error);
-            showError('Sorry, there was an error submitting your review. Please try again.');
-        } finally {
-            submitButton.disabled = false;
-            submitButton.textContent = 'Submit Review';
-        }
-    });
-
+    // Initial fetch
+    fetchReviews();
+    
     // Set up periodic refresh
     setInterval(fetchReviews, REFRESH_INTERVAL);
 
-    // Initial fetch of reviews
-    fetchReviews();
-
-    // Refresh when page becomes visible again
-    document.addEventListener('visibilitychange', function() {
-        if (document.visibilityState === 'visible') {
-            console.log('Page became visible, refreshing reviews');
-            fetchReviews();
-        }
-    });
+    // Only set up form handling if we're on the reviews page
+    if (reviewForm) {
+        reviewForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(reviewForm);
+            const reviewData = {
+                name: formData.get('name'),
+                rating: parseInt(formData.get('rating')),
+                text: formData.get('text')
+            };
+            
+            try {
+                const response = await fetch(`${API_URL}/reviews`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(reviewData)
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to submit review');
+                }
+                
+                showSuccess('Review submitted successfully! It will appear after approval.');
+                reviewForm.reset();
+                
+            } catch (error) {
+                console.error('Error submitting review:', error);
+                showError('Failed to submit review. Please try again.');
+            }
+        });
+    }
 });
