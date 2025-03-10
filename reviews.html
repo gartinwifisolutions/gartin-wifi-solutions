@@ -15,6 +15,7 @@
             text-align: center;
             padding: 20px;
             color: #666;
+            font-size: 1.1em;
         }
         .loading:after {
             content: '.';
@@ -29,18 +30,63 @@
         .error-message {
             background-color: #ffebee;
             color: #c62828;
-            padding: 10px;
-            margin: 10px 0;
+            padding: 15px;
+            margin: 15px 0;
             border-radius: 4px;
             text-align: center;
+            font-size: 1.1em;
         }
         .success-message {
             background-color: #e8f5e9;
             color: #2e7d32;
-            padding: 10px;
-            margin: 10px 0;
+            padding: 15px;
+            margin: 15px 0;
             border-radius: 4px;
             text-align: center;
+            font-size: 1.1em;
+        }
+        .reviews-list {
+            min-height: 200px;
+            position: relative;
+        }
+        .review-card {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .review-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .review-header h3 {
+            margin: 0;
+            color: #00e5ff;
+            font-size: 1.2em;
+        }
+        .stars {
+            color: #00e5ff;
+            letter-spacing: 2px;
+        }
+        .review-date {
+            color: #888;
+            font-size: 0.9em;
+        }
+        .review-card p {
+            color: #fff;
+            line-height: 1.6;
+            margin: 0;
+        }
+        .no-reviews {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-size: 1.1em;
         }
     </style>
 </head>
@@ -103,16 +149,13 @@
             <div class="reviews-container">
                 <h2>What Our Customers Say</h2>
                 <div id="reviewsList" class="reviews-list">
-                    <div class="loading">Loading reviews</div>
+                    <div class="loading">Loading reviews from our customers</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Force Netlify to serve latest version -->
-    <script>
-        // Add timestamp to force cache refresh
-        document.write('<script src="reviews.js?v=' + Date.now() + '"><\/script>');
-    </script>
+    <!-- Use the new JavaScript file -->
+    <script src="reviews-v2.js"></script>
 </body>
 </html>
