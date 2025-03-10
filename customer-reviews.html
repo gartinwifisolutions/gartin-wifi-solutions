@@ -260,7 +260,9 @@
                     // Filter out test reviews but keep real customer reviews
                     const filteredReviews = reviews.filter(review => {
                         const name = review.name.toLowerCase();
-                        const isTest = name.includes('test') || name.includes('quick');
+                        const isTest = name.includes('test') || 
+                                     name.includes('quick') || 
+                                     name === 'john g';
                         console.log(`Review from ${review.name}: ${isTest ? 'filtered out (test)' : 'included'}`);
                         return review.approved && !isTest;
                     });
