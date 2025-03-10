@@ -133,9 +133,51 @@
         .api-key-form button:hover {
             background: var(--primary-color-dark);
         }
+
+        #loginScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .login-form {
+            background: var(--dark-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-form h2 {
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
+    <div id="loginScreen">
+        <div class="login-form">
+            <h2>Admin Login</h2>
+            <div class="api-key-form">
+                <input type="password" id="apiKey" placeholder="Enter your API key">
+                <button onclick="login()">Login</button>
+            </div>
+            <div id="loginMessage"></div>
+        </div>
+    </div>
+
     <nav class="navbar">
         <div class="nav-container">
             <a href="../index.html" class="logo">
@@ -144,19 +186,13 @@
             <button class="menu-button">☰</button>
             <ul class="nav-links">
                 <li><a href="../index.html">Back to Website</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
             </ul>
         </div>
     </nav>
 
     <div class="admin-container">
         <h1>Review Management</h1>
-        
-        <div class="api-key-form">
-            <h2>API Key</h2>
-            <input type="password" id="apiKey" placeholder="Enter your API key">
-            <button onclick="saveApiKey()">Save API Key</button>
-        </div>
-
         <div id="messageContainer"></div>
         
         <table class="review-table">
@@ -181,27 +217,71 @@
             const API_URL = 'https://gartin-wifi-api.onrender.com';
             const reviewsTableBody = document.getElementById('reviewsTableBody');
             const messageContainer = document.getElementById('messageContainer');
+            const loginScreen = document.getElementById('loginScreen');
+            const loginMessage = document.getElementById('loginMessage');
 
             // Show message function
-            function showMessage(message, isError = false) {
+            function showMessage(message, isError = false, container = messageContainer) {
                 const div = document.createElement('div');
                 div.className = isError ? 'error-message' : 'success-message';
                 div.textContent = message;
-                messageContainer.innerHTML = '';
-                messageContainer.appendChild(div);
+                container.innerHTML = '';
+                container.appendChild(div);
                 setTimeout(() => div.remove(), 5000);
             }
 
-            // Save API key
-            window.saveApiKey = function() {
+            // Login function
+            window.login = function() {
                 const apiKey = document.getElementById('apiKey').value;
-                if (apiKey) {
-                    localStorage.setItem('adminApiKey', apiKey);
-                    showMessage('API key saved successfully');
-                    fetchReviews();
-                } else {
-                    showMessage('Please enter an API key', true);
+                if (!apiKey) {
+                    showMessage('Please enter your API key', true, loginMessage);
+                    return;
                 }
+
+                localStorage.setItem('adminApiKey', apiKey);
+                verifyApiKey();
+            }
+
+            // Verify API key
+            async function verifyApiKey() {
+                const apiKey = getApiKey();
+                if (!apiKey) {
+                    showLoginScreen();
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`${API_URL}/api/admin/reviews`, {
+                        headers: {
+                            'X-API-Key': apiKey
+                        }
+                    });
+
+                    if (response.ok) {
+                        hideLoginScreen();
+                        fetchReviews();
+                    } else {
+                        throw new Error('Invalid API key');
+                    }
+                } catch (error) {
+                    localStorage.removeItem('adminApiKey');
+                    showMessage('Invalid API key. Please try again.', true, loginMessage);
+                }
+            }
+
+            // Logout function
+            window.logout = function() {
+                localStorage.removeItem('adminApiKey');
+                showLoginScreen();
+            }
+
+            // Show/Hide login screen
+            function showLoginScreen() {
+                loginScreen.classList.remove('hidden');
+            }
+
+            function hideLoginScreen() {
+                loginScreen.classList.add('hidden');
             }
 
             // Get API key
@@ -213,7 +293,7 @@
             async function fetchReviews() {
                 const apiKey = getApiKey();
                 if (!apiKey) {
-                    showMessage('Please enter your API key', true);
+                    showLoginScreen();
                     return;
                 }
 
@@ -268,7 +348,7 @@
             window.approveReview = async function(id) {
                 const apiKey = getApiKey();
                 if (!apiKey) {
-                    showMessage('Please enter your API key', true);
+                    showLoginScreen();
                     return;
                 }
 
@@ -297,7 +377,7 @@
             window.rejectReview = async function(id) {
                 const apiKey = getApiKey();
                 if (!apiKey) {
-                    showMessage('Please enter your API key', true);
+                    showLoginScreen();
                     return;
                 }
 
@@ -322,11 +402,10 @@
                 }
             }
 
-            // Check for saved API key and fetch reviews
+            // Check for saved API key and verify
             const savedApiKey = getApiKey();
             if (savedApiKey) {
-                document.getElementById('apiKey').value = savedApiKey;
-                fetchReviews();
+                verifyApiKey();
             }
         });
     </script>
