@@ -123,6 +123,11 @@ a {
     vertical-align: middle;
 }
 
+.rating-stars strong {
+    font-weight: 600;
+    color: #00E5FF;
+}
+
 @media (max-width: 768px) {
     .logo img {
         width: 150px;
