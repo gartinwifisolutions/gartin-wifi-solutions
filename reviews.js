@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        // Sort reviews by date (newest first)
+        reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+
         reviews.forEach(review => {
             const reviewCard = createReviewCard(review);
             reviewsList.appendChild(reviewCard);
@@ -82,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
         successDiv.className = 'success-message';
         successDiv.textContent = message;
         reviewForm.insertAdjacentElement('beforebegin', successDiv);
-        setTimeout(() => successDiv.remove(), 5000);
+        setTimeout(() => successDiv.remove(), 3000);
     }
 
     // Handle form submission
@@ -121,10 +124,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Reset form
             reviewForm.reset();
-            showSuccess('Thank you for your review! It will be visible after approval.');
+            showSuccess('Thank you for your review! It is now visible on the page.');
             
-            // Refresh reviews
-            fetchReviews();
+            // Wait a moment before refreshing reviews to ensure the new review is available
+            setTimeout(fetchReviews, 1000);
         } catch (error) {
             console.error('Error submitting review:', error);
             showError('Sorry, there was an error submitting your review. Please try again.');
