@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Customer Reviews - Gartin WiFi Solutions</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 1.1em;
+        }
+        .loading:after {
+            content: '.';
+            animation: dots 1.5s steps(5, end) infinite;
+        }
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60% { content: '...'; }
+            80%, 100% { content: ''; }
+        }
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        .success-message {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        .reviews-list {
+            min-height: 200px;
+            position: relative;
+        }
+        .review-card {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: transform 0.2s ease;
+        }
+        .review-card:hover {
+            transform: translateY(-2px);
+        }
+        .review-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .review-header h3 {
+            margin: 0;
+            color: #00e5ff;
+            font-size: 1.2em;
+        }
+        .stars {
+            color: #00e5ff;
+            letter-spacing: 2px;
+        }
+        .review-date {
+            color: #888;
+            font-size: 0.9em;
+        }
+        .review-card p {
+            color: #fff;
+            line-height: 1.6;
+            margin: 0;
+        }
+        .no-reviews {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-size: 1.1em;
+        }
+        .review-form-container {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+        .review-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .form-group label {
+            color: #fff;
+            font-weight: 500;
+        }
+        .form-group input[type="text"],
+        .form-group textarea {
+            padding: 12px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background: #222;
+            color: #fff;
+            font-size: 1em;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            gap: 8px;
+        }
+        .star-rating input {
+            display: none;
+        }
+        .star-rating label {
+            cursor: pointer;
+            font-size: 30px;
+            color: #444;
+            transition: color 0.2s ease;
+        }
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input:checked ~ label {
+            color: #00e5ff;
+        }
+        .submit-btn {
+            background: #00e5ff;
+            color: #000;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .submit-btn:hover {
+            background: #33eaff;
+        }
+        .submit-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.png" alt="Gartin WiFi Solutions Logo">
+            </a>
+            <button class="menu-button">☰</button>
+            <ul class="nav-links">
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#why-us">Why Choose Us</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="customer-reviews.html">Reviews</a></li>
+                <li class="contact-link"><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section">
+        <div class="container">
+            <h1>Customer Reviews</h1>
+            <p class="section-description">Read what our customers say about our services or share your own experience.</p>
+            
+            <!-- Review Form -->
+            <div class="review-form-container">
+                <h2>Share Your Experience</h2>
+                <form id="reviewForm" class="review-form">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rating">Rating:</label>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5" required>
+                            <label for="star5">★</label>
+                            <input type="radio" id="star4" name="rating" value="4">
+                            <label for="star4">★</label>
+                            <input type="radio" id="star3" name="rating" value="3">
+                            <label for="star3">★</label>
+                            <input type="radio" id="star2" name="rating" value="2">
+                            <label for="star2">★</label>
+                            <input type="radio" id="star1" name="rating" value="1">
+                            <label for="star1">★</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="review">Your Review:</label>
+                        <textarea id="review" name="review" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit Review</button>
+                </form>
+            </div>
+
+            <!-- Reviews Display -->
+            <div class="reviews-container">
+                <h2>What Our Customers Say</h2>
+                <div id="reviewsList" class="reviews-list">
+                    <div class="loading">Loading reviews from our customers</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const reviewForm = document.getElementById('reviewForm');
+            const reviewsList = document.getElementById('reviewsList');
+            const API_URL = 'https://gartin-wifi-api.onrender.com/api';
+            const REFRESH_INTERVAL = 30000; // Refresh every 30 seconds
+
+            // Fetch and display reviews
+            async function fetchReviews() {
+                try {
+                    console.log('Fetching reviews from:', `${API_URL}/reviews`);
+                    const response = await fetch(`${API_URL}/reviews`, {
+                        cache: 'no-store',
+                        headers: {
+                            'Cache-Control': 'no-cache, no-store, must-revalidate',
+                            'Pragma': 'no-cache',
+                            'Expires': '0'
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch reviews: ${response.status} ${response.statusText}`);
+                    }
+                    
+                    const reviews = await response.json();
+                    console.log('Received reviews:', reviews);
+                    
+                    // Filter out test reviews but keep real customer reviews
+                    const filteredReviews = reviews.filter(review => {
+                        const name = review.name.toLowerCase();
+                        const isTest = name.includes('test') || name.includes('quick');
+                        console.log(`Review from ${review.name}: ${isTest ? 'filtered out (test)' : 'included'}`);
+                        return review.approved && !isTest;
+                    });
+                    
+                    console.log('Filtered reviews:', filteredReviews);
+                    displayReviews(filteredReviews);
+                } catch (error) {
+                    console.error('Error fetching reviews:', error);
+                    reviewsList.innerHTML = `
+                        <div class="error-message">
+                            Unable to load reviews. Please try refreshing the page.
+                            <br>
+                            Error: ${error.message}
+                        </div>
+                    `;
+                }
+            }
+
+            // Display reviews
+            function displayReviews(reviews) {
+                if (reviews.length === 0) {
+                    reviewsList.innerHTML = `
+                        <div class="no-reviews">
+                            Be the first to leave a review!
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Sort reviews by date (newest first)
+                reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+                console.log('Displaying reviews in order:', reviews.map(r => r.name));
+
+                const reviewsHtml = reviews.map(review => {
+                    const date = new Date(review.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+
+                    return `
+                        <div class="review-card">
+                            <div class="review-header">
+                                <h3>${review.name}</h3>
+                                <div class="stars">${'★'.repeat(review.rating)}</div>
+                                <span class="review-date">${date}</span>
+                            </div>
+                            <p>${review.review}</p>
+                        </div>
+                    `;
+                }).join('');
+
+                reviewsList.innerHTML = reviewsHtml;
+            }
+
+            // Show error message
+            function showError(message, duration = 5000) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message';
+                errorDiv.textContent = message;
+                reviewForm.insertAdjacentElement('beforebegin', errorDiv);
+                setTimeout(() => errorDiv.remove(), duration);
+            }
+
+            // Show success message
+            function showSuccess(message, duration = 3000) {
+                const successDiv = document.createElement('div');
+                successDiv.className = 'success-message';
+                successDiv.textContent = message;
+                reviewForm.insertAdjacentElement('beforebegin', successDiv);
+                setTimeout(() => successDiv.remove(), duration);
+            }
+
+            // Handle form submission
+            reviewForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const submitButton = reviewForm.querySelector('button[type="submit"]');
+                submitButton.disabled = true;
+                submitButton.textContent = 'Submitting...';
+
+                try {
+                    // Get form values
+                    const name = document.getElementById('name').value;
+                    const rating = document.querySelector('input[name="rating"]:checked').value;
+                    const review = document.getElementById('review').value;
+
+                    console.log('Submitting review for:', name);
+
+                    // Create review object
+                    const newReview = {
+                        name: name.trim(),
+                        rating: parseInt(rating),
+                        review: review.trim()
+                    };
+
+                    // Submit review to backend
+                    const response = await fetch(`${API_URL}/reviews`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Cache-Control': 'no-cache, no-store, must-revalidate',
+                            'Pragma': 'no-cache',
+                            'Expires': '0'
+                        },
+                        body: JSON.stringify(newReview)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to submit review');
+                    }
+
+                    // Reset form
+                    reviewForm.reset();
+                    showSuccess('Thank you for your review! It will appear on the page shortly.');
+                    
+                    // Wait a moment before refreshing reviews to ensure the new review is available
+                    setTimeout(fetchReviews, 1000);
+                } catch (error) {
+                    console.error('Error submitting review:', error);
+                    showError('Sorry, there was an error submitting your review. Please try again.');
+                } finally {
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Submit Review';
+                }
+            });
+
+            // Set up periodic refresh
+            setInterval(fetchReviews, REFRESH_INTERVAL);
+
+            // Initial fetch of reviews
+            fetchReviews();
+
+            // Refresh when page becomes visible again
+            document.addEventListener('visibilitychange', function() {
+                if (document.visibilityState === 'visible') {
+                    console.log('Page became visible, refreshing reviews');
+                    fetchReviews();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
