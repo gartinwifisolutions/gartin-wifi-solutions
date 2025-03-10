@@ -2,11 +2,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const reviewForm = document.getElementById('reviewForm');
     const reviewsList = document.getElementById('reviewsList');
     const API_URL = 'https://gartin-wifi-api.onrender.com/api';
+    const REFRESH_INTERVAL = 30000; // Refresh every 30 seconds
 
     // Fetch and display reviews
     async function fetchReviews() {
         try {
-            const response = await fetch(`${API_URL}/reviews`);
+            const response = await fetch(`${API_URL}/reviews`, {
+                cache: 'no-store' // Always get fresh data
+            });
             if (!response.ok) {
                 throw new Error('Failed to fetch reviews');
             }
@@ -144,6 +147,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Set up periodic refresh
+    setInterval(fetchReviews, REFRESH_INTERVAL);
+
     // Initial fetch of reviews
     fetchReviews();
+
+    // Refresh when page becomes visible again
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'visible') {
+            fetchReviews();
+        }
+    });
 });
