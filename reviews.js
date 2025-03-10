@@ -6,6 +6,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Calculate and display average rating
     function updateAverageRating(reviews) {
+        if (!reviews || reviews.length === 0) {
+            const ratingElement = document.getElementById('average-rating');
+            if (ratingElement) {
+                ratingElement.innerHTML = ''; // Hide rating if no reviews
+            }
+            return;
+        }
+
         const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
         const averageRating = (totalRating / reviews.length).toFixed(1);
         const ratingElement = document.getElementById('average-rating');
@@ -54,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } catch (error) {
             console.error('Error fetching reviews:', error);
+            updateAverageRating([]); // Clear rating on error
             if (reviewsList) {
                 reviewsList.innerHTML = `
                     <div class="error-message">
@@ -68,14 +77,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Display reviews
     function displayReviews(reviews) {
-        if (reviews.length === 0) {
+        if (!reviews || reviews.length === 0) {
             reviewsList.innerHTML = '<p>No reviews yet. Be the first to leave a review!</p>';
             return;
         }
 
         // Sort reviews by date (newest first)
         reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
-        console.log('Displaying reviews in order:', reviews.map(r => r.name));
 
         reviewsList.innerHTML = reviews.map(review => `
             <div class="review-card">
