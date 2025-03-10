@@ -112,17 +112,6 @@ a {
 .reviews-link {
     display: flex;
     align-items: center;
-    gap: 5px;
-}
-
-.rating-display {
-    color: var(--text-color);
-    font-weight: 500;
-}
-
-.single-star {
-    color: var(--primary-color);
-    font-size: 1em;
 }
 
 @media (max-width: 768px) {

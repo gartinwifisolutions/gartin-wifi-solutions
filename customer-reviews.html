@@ -180,6 +180,27 @@
             background: #666;
             cursor: not-allowed;
         }
+        .average-rating-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .rating-value {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #00e5ff;
+            margin-bottom: 10px;
+        }
+        .rating-stars {
+            font-size: 2em;
+            color: #00e5ff;
+            margin-bottom: 10px;
+        }
+        .rating-label {
+            font-size: 1.2em;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -194,7 +215,7 @@
                 <li><a href="index.html#services">Services</a></li>
                 <li><a href="index.html#why-us">Why Choose Us</a></li>
                 <li><a href="index.html#about">About</a></li>
-                <li><a href="customer-reviews.html" class="reviews-link">REVIEWS <span id="average-rating" class="rating-display">4.8</span> <span class="single-star">★</span></a></li>
+                <li><a href="customer-reviews.html">REVIEWS</a></li>
                 <li class="contact-link"><a href="index.html#contact">Contact</a></li>
             </ul>
         </div>
@@ -206,6 +227,13 @@
             <h1>Customer Reviews</h1>
             <p class="section-description">Read what our customers say about our services or share your own experience.</p>
             
+            <!-- Average Rating Section -->
+            <div class="average-rating-container">
+                <div class="rating-value"><span id="average-rating">4.8</span></div>
+                <div class="rating-stars">★★★★★</div>
+                <div class="rating-label">Average Rating</div>
+            </div>
+
             <!-- Review Form -->
             <div class="review-form-container">
                 <h2>Share Your Experience</h2>
