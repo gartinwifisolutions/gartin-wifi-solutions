@@ -721,6 +721,7 @@ body {
 .contact-item a {
     color: var(--text-color);
     font-size: 1rem;
+    font-family: var(--font-body);
     text-decoration: none;
     transition: color 0.3s ease;
 }
@@ -774,6 +775,34 @@ body {
 .form-group input::placeholder,
 .form-group textarea::placeholder {
     color: rgba(255, 255, 255, 0.5);
+    font-family: var(--font-body);
+}
+
+.send-message-btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: var(--primary-color);
+    color: var(--dark-bg);
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-heading);
+    width: 100%;
+}
+
+.send-message-btn:hover {
+    background-color: #00ccff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
+}
+
+.send-message-btn:active {
+    transform: translateY(0);
 }
 
 @media (max-width: 768px) {
