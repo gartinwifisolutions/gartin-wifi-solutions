@@ -88,14 +88,23 @@ body {
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 500;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
     white-space: nowrap;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
 }
 
 .nav-links a:hover {
-    color: var(--primary-color);
+    color: var(--dark-bg);
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
+}
+
+.nav-links a:active {
+    transform: translateY(0);
 }
 
 /* Mobile Menu */
@@ -124,12 +133,19 @@ body {
     padding: 0.8rem;
     text-align: center;
     font-size: 1rem;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+    border-radius: 4px;
 }
 
 .mobile-menu a:hover {
-    color: var(--primary-color);
-    background: rgba(0, 229, 255, 0.1);
+    color: var(--dark-bg);
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
+}
+
+.mobile-menu a:active {
+    transform: translateY(0);
 }
 
 /* Responsive Design */
