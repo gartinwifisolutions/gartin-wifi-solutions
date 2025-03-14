@@ -632,7 +632,7 @@ body {
 
 /* Contact Section */
 .contact {
-    padding: 5rem 0;
+    padding: 6rem 0;
     background-color: var(--dark-bg);
 }
 
@@ -647,18 +647,40 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     margin-top: 3rem;
+    align-items: start;
 }
 
 .contact-info {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 2.5rem;
+    padding: 2rem;
+    background: rgba(26, 26, 26, 0.5);
+    border-radius: 8px;
+    border: 1px solid rgba(0, 229, 255, 0.1);
+}
+
+.contact-info > * {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-info > *:hover {
+    color: var(--primary-color);
 }
 
 .contact-form {
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
+    padding: 2rem;
+    background: rgba(26, 26, 26, 0.5);
+    border-radius: 8px;
+    border: 1px solid rgba(0, 229, 255, 0.1);
 }
 
 .form-group {
@@ -722,9 +744,18 @@ body {
 }
 
 @media (max-width: 768px) {
+    .contact {
+        padding: 4rem 0;
+    }
+
+    .contact-container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .contact-info,
     .contact-form {
-        max-width: 100%;
-        padding: 0;
+        padding: 1.5rem;
     }
     
     .form-group input,
@@ -970,10 +1001,11 @@ body {
     border: none;
     border-radius: 6px;
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
     cursor: pointer;
     transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
 }
 
 .consultation-form .cta-button:hover {
