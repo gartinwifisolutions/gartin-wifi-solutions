@@ -669,11 +669,12 @@ body {
 .form-group textarea {
     width: 100%;
     padding: 1rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(0, 229, 255, 0.2);
+    background: rgba(26, 26, 26, 0.95);
+    border: 1px solid rgba(0, 229, 255, 0.3);
     border-radius: 4px;
     color: var(--text-color);
     font-family: var(--font-body);
+    font-size: 1rem;
     transition: all 0.3s ease;
 }
 
@@ -686,12 +687,13 @@ body {
 .form-group textarea:focus {
     outline: none;
     border-color: var(--primary-color);
-    background: rgba(0, 229, 255, 0.05);
+    background: rgba(26, 26, 26, 0.98);
+    box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.1);
 }
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .send-message-btn {
@@ -700,27 +702,34 @@ body {
     border: none;
     padding: 1rem 2rem;
     border-radius: 4px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 1px;
     width: 100%;
+    font-size: 0.9rem;
 }
 
 .send-message-btn:hover {
     background-color: #00ccff;
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
+}
+
+.send-message-btn:active {
+    transform: translateY(0);
 }
 
 @media (max-width: 768px) {
-    .contact-container {
-        grid-template-columns: 1fr;
-    }
-
     .contact-form {
         max-width: 100%;
-        padding: 0 1rem;
+        padding: 0;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        font-size: 16px; /* Prevents iOS zoom on focus */
     }
 }
 
