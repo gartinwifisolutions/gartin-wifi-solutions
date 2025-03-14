@@ -656,18 +656,71 @@ body {
 }
 
 .contact-form {
-    max-width: 500px;
+    width: 100%;
+    max-width: 600px;
     margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    border-radius: 4px;
+    color: var(--text-color);
+    font-family: var(--font-body);
+    transition: all 0.3s ease;
+}
+
+.form-group textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: rgba(0, 229, 255, 0.05);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.send-message-btn {
+    background-color: var(--primary-color);
+    color: var(--dark-bg);
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: 100%;
+}
+
+.send-message-btn:hover {
+    background-color: #00ccff;
+    transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {
     .contact-container {
         grid-template-columns: 1fr;
-        gap: 3rem;
     }
 
     .contact-form {
         max-width: 100%;
+        padding: 0 1rem;
     }
 }
 
@@ -743,55 +796,6 @@ body {
     background: rgba(26, 26, 26, 0.6);
     border-radius: 10px;
     border: 1px solid var(--primary-color);
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 1rem;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(0, 229, 255, 0.3);
-    border-radius: 5px;
-    color: var(--text-color);
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-}
-
-.form-group textarea {
-    height: 150px;
-    resize: vertical;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--primary-color);
-}
-
-.success-message {
-    margin-top: 1rem;
-    padding: 1rem;
-    background: rgba(0, 229, 255, 0.1);
-    border: 1px solid var(--primary-color);
-    border-radius: 5px;
-    color: var(--primary-color);
-    text-align: center;
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 /* Form Validation Messages */
