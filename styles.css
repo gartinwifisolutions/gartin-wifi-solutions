@@ -31,48 +31,32 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
-    background: rgba(18, 18, 18, 0.95);
+    background: rgba(26, 26, 26, 0.95);
     backdrop-filter: blur(10px);
+    z-index: 1000;
     border-bottom: 1px solid rgba(0, 229, 255, 0.1);
 }
 
 .nav-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 0.5rem 2rem;
+    position: relative;
 }
 
-.nav-links {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.nav-links a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-}
-
-.nav-links a:hover {
-    color: var(--primary-color);
-    background: rgba(0, 229, 255, 0.1);
+.logo {
+    display: block;
+    width: auto;
+    margin-right: auto;
 }
 
 .logo img {
-    height: 40px;
-    width: auto;
+    width: 200px;
+    height: auto;
+    display: block;
 }
 
 .menu-button {
@@ -80,9 +64,38 @@ body {
     background: none;
     border: none;
     color: var(--text-color);
-    font-size: 1.5rem;
     cursor: pointer;
     padding: 0.5rem;
+    font-size: 1.5rem;
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
 }
 
 /* Mobile Menu */
@@ -122,27 +135,59 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
     .nav-container {
-        padding: 1rem;
+        padding: 0.5rem 1rem;
     }
 
-    .nav-links {
-        display: none;
+    .logo img {
+        width: 150px;
     }
 
     .menu-button {
         display: block;
+        right: 1rem;
     }
 
-    .logo img {
-        height: 36px;
+    .nav-links {
+        display: none;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: rgba(26, 26, 26, 0.98);
+        flex-direction: column;
+        padding: 1rem 0;
+        gap: 0;
+        border-bottom: 1px solid rgba(0, 229, 255, 0.1);
     }
 
-    .mobile-menu.active {
+    .nav-links.active {
         display: flex;
     }
 
-    .hero {
-        padding-top: 72px;
+    .nav-links a {
+        padding: 1rem 2rem;
+        width: 100%;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-links a:hover {
+        background: rgba(0, 229, 255, 0.1);
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-container {
+        padding: 0.5rem 1rem;
+    }
+
+    .logo img {
+        width: 120px;
+    }
+
+    .nav-links a {
+        font-size: 0.85rem;
+        padding: 0.8rem 1rem;
     }
 }
 
@@ -587,26 +632,27 @@ body {
 
 /* Contact Section */
 .contact {
-    padding: 4rem 1rem;
+    padding: 5rem 0;
     background-color: var(--dark-bg);
 }
 
 .contact .section-container {
-    max-width: 1000px;
+    max-width: var(--max-width);
     margin: 0 auto;
+    padding: 0 2rem;
 }
 
 .contact-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    margin-top: 2rem;
+    gap: 4rem;
+    margin-top: 3rem;
 }
 
 .contact-info {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
 .contact-form {
@@ -617,7 +663,7 @@ body {
 @media (max-width: 768px) {
     .contact-container {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 3rem;
     }
 
     .contact-form {
