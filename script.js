@@ -1,29 +1,29 @@
 // Mobile menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const menuButton = document.querySelector('.menu-button');
-    const mobileMenu = document.querySelector('.mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
 
-    if (menuButton && mobileMenu) {
+    if (menuButton && navLinks) {
         // Handle menu button clicks
         menuButton.addEventListener('click', function(event) {
             event.stopPropagation(); // Prevent document click from immediately closing menu
-            mobileMenu.classList.toggle('active');
-            menuButton.textContent = mobileMenu.classList.contains('active') ? '✕' : '☰';
+            navLinks.classList.toggle('active');
+            menuButton.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
         });
 
         // Close menu when clicking anywhere outside
         document.addEventListener('click', function(event) {
-            const isClickInside = mobileMenu.contains(event.target) || menuButton.contains(event.target);
-            if (!isClickInside && mobileMenu.classList.contains('active')) {
-                mobileMenu.classList.remove('active');
+            const isClickInside = navLinks.contains(event.target) || menuButton.contains(event.target);
+            if (!isClickInside && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
                 menuButton.textContent = '☰';
             }
         });
 
         // Close menu when clicking a link
-        mobileMenu.querySelectorAll('a').forEach(link => {
+        navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function() {
-                mobileMenu.classList.remove('active');
+                navLinks.classList.remove('active');
                 menuButton.textContent = '☰';
             });
         });
@@ -32,18 +32,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        const href = this.getAttribute('href');
-        if (href !== '#') {
-            e.preventDefault();
-            const target = document.querySelector(href);
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        }
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
     });
 });
 
