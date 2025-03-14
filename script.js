@@ -1,43 +1,50 @@
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-});
-
 // Mobile menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const menuButton = document.querySelector('.menu-button');
-    const navLinks = document.querySelector('.nav-links');
+    const mobileMenu = document.querySelector('.mobile-menu');
 
-    if (menuButton && navLinks) {
+    if (menuButton && mobileMenu) {
         // Handle menu button clicks
         menuButton.addEventListener('click', function(event) {
             event.stopPropagation(); // Prevent document click from immediately closing menu
-            navLinks.classList.toggle('active');
-            menuButton.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+            mobileMenu.classList.toggle('active');
+            menuButton.textContent = mobileMenu.classList.contains('active') ? '✕' : '☰';
         });
 
         // Close menu when clicking anywhere outside
         document.addEventListener('click', function(event) {
-            const isClickInside = navLinks.contains(event.target) || menuButton.contains(event.target);
-            if (!isClickInside && navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
+            const isClickInside = mobileMenu.contains(event.target) || menuButton.contains(event.target);
+            if (!isClickInside && mobileMenu.classList.contains('active')) {
+                mobileMenu.classList.remove('active');
                 menuButton.textContent = '☰';
             }
         });
 
         // Close menu when clicking a link
-        navLinks.querySelectorAll('a').forEach(link => {
+        mobileMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function() {
-                navLinks.classList.remove('active');
+                mobileMenu.classList.remove('active');
                 menuButton.textContent = '☰';
             });
         });
     }
+});
+
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href !== '#') {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+    });
 });
 
 // Contact form handling
@@ -53,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const message = document.getElementById('message').value;
             
             // Format the email body
-            const mailtoLink = `mailto:Gartinwifisolutions@gmail.com?subject=Website Inquiry from ${name}&body=Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`;
+            const mailtoLink = `mailto:john@gartinwifisolutions.com?subject=Website Inquiry from ${name}&body=Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`;
             
             // Open email client with pre-filled content
             window.location.href = mailtoLink;

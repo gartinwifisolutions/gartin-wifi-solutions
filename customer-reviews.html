@@ -61,30 +61,48 @@
             transform: translateY(-2px);
         }
         .review-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 15px;
             margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
         }
         .review-header h3 {
             margin: 0;
             color: #00e5ff;
             font-size: 1.2em;
+            grid-column: 1;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+        .review-rating {
+            grid-column: 2;
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+            font-family: 'Roboto', sans-serif;
         }
         .stars {
             color: #00e5ff;
             letter-spacing: 2px;
+            font-size: 1.1em;
+            font-weight: 500;
         }
         .review-date {
             color: #888;
-            font-size: 0.9em;
+            font-size: 0.85em;
+            font-weight: 300;
         }
         .review-card p {
             color: #fff;
             line-height: 1.6;
             margin: 0;
+            grid-column: 1 / -1;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+            font-size: 1em;
         }
         .no-reviews {
             text-align: center;
@@ -162,6 +180,27 @@
             background: #666;
             cursor: not-allowed;
         }
+        .average-rating-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .rating-value {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #00e5ff;
+            margin-bottom: 10px;
+        }
+        .rating-stars {
+            font-size: 2em;
+            color: #00e5ff;
+            margin-bottom: 10px;
+        }
+        .rating-label {
+            font-size: 1.2em;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -176,7 +215,7 @@
                 <li><a href="index.html#services">Services</a></li>
                 <li><a href="index.html#why-us">Why Choose Us</a></li>
                 <li><a href="index.html#about">About</a></li>
-                <li><a href="customer-reviews.html">Reviews</a></li>
+                <li><a href="customer-reviews.html">REVIEWS</a></li>
                 <li class="contact-link"><a href="index.html#contact">Contact</a></li>
             </ul>
         </div>
@@ -188,6 +227,13 @@
             <h1>Customer Reviews</h1>
             <p class="section-description">Read what our customers say about our services or share your own experience.</p>
             
+            <!-- Average Rating Section -->
+            <div class="average-rating-container">
+                <div class="rating-value"><span id="average-rating">4.8</span></div>
+                <div class="rating-stars">★★★★★</div>
+                <div class="rating-label">Average Rating</div>
+            </div>
+
             <!-- Review Form -->
             <div class="review-form-container">
                 <h2>Share Your Experience</h2>
@@ -323,8 +369,10 @@
                         <div class="review-card">
                             <div class="review-header">
                                 <h3>${review.name}</h3>
-                                <div class="stars">${'★'.repeat(review.rating)}</div>
-                                <span class="review-date">${date}</span>
+                                <div class="review-rating">
+                                    <div class="stars">${'★'.repeat(review.rating)}</div>
+                                    <span class="review-date">${date}</span>
+                                </div>
                             </div>
                             <p>${review.review}</p>
                         </div>
