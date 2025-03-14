@@ -15,6 +15,10 @@ All notable changes to the Gartin WiFi Solutions website will be documented in t
   - Optimized form for mobile devices
 
 ### Changed
+- Updated hero section tagline to "Smarter, Faster, Safer Connectivity!"
+  - Added metallic silver gradient effect
+  - Added subtle shimmer animation
+  - Improved responsive text sizing
 - Increased hero video brightness for better visibility
 - Enhanced contact form styling with better contrast and interactions
 - Improved mobile form usability to prevent iOS zoom on focus
