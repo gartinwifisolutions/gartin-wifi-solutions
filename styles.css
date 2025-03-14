@@ -234,10 +234,11 @@ body {
 
 .hero-content h1 {
     font-size: 3rem;
+    margin-bottom: 1rem;
     font-weight: 700;
-    margin-bottom: 1.5rem;
-    color: var(--text-color);
-    line-height: 1.2;
+    font-family: var(--font-heading);
+    color: var(--primary-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .hero-content .tagline {
@@ -674,45 +675,70 @@ body {
     padding: 0 2rem;
 }
 
+.contact h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--text-color);
+}
+
 .contact-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
-    margin-top: 3rem;
-    align-items: start;
+    align-items: stretch;
 }
 
-.contact-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
-    padding: 2rem;
+.contact-info, .contact-form {
     background: rgba(26, 26, 26, 0.5);
     border-radius: 8px;
     border: 1px solid rgba(0, 229, 255, 0.1);
+    padding: 2.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
-.contact-info > * {
+.contact-info h3, .contact-form h3 {
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    color: var(--text-color);
+}
+
+.contact-details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.contact-item {
     display: flex;
     align-items: center;
     gap: 1rem;
+}
+
+.contact-item p, 
+.contact-item a {
     color: var(--text-color);
+    font-size: 1rem;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
-.contact-info > *:hover {
+.contact-item a:hover {
     color: var(--primary-color);
 }
 
-.contact-form {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 2rem;
-    background: rgba(26, 26, 26, 0.5);
-    border-radius: 8px;
-    border: 1px solid rgba(0, 229, 255, 0.1);
+.contact-icon {
+    width: 24px;
+    height: 24px;
+    background-color: var(--primary-color);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
 }
 
 .form-group {
@@ -750,31 +776,6 @@ body {
     color: rgba(255, 255, 255, 0.5);
 }
 
-.send-message-btn {
-    background-color: var(--primary-color);
-    color: var(--dark-bg);
-    border: none;
-    padding: 1rem 2rem;
-    border-radius: 4px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    width: 100%;
-    font-size: 0.9rem;
-}
-
-.send-message-btn:hover {
-    background-color: #00ccff;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
-}
-
-.send-message-btn:active {
-    transform: translateY(0);
-}
-
 @media (max-width: 768px) {
     .contact {
         padding: 4rem 0;
@@ -782,92 +783,29 @@ body {
 
     .contact-container {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 2rem;
+    }
+
+    .contact-info,
+    .contact-form {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact .section-container {
+        padding: 0 1rem;
     }
 
     .contact-info,
     .contact-form {
         padding: 1.5rem;
     }
-    
-    .form-group input,
-    .form-group textarea {
-        font-size: 16px; /* Prevents iOS zoom on focus */
+
+    .contact-item p, 
+    .contact-item a {
+        font-size: 0.95rem;
     }
-}
-
-.contact-info {
-    padding: 2rem;
-    background: rgba(26, 26, 26, 0.6);
-    border-radius: 10px;
-    border: 1px solid var(--primary-color);
-}
-
-.contact-details {
-    margin-top: 2rem;
-}
-
-.contact-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    gap: 1rem;
-}
-
-.contact-icon {
-    width: 24px;
-    height: 24px;
-    background-color: var(--primary-color);
-    mask-size: contain;
-    mask-repeat: no-repeat;
-    mask-position: center;
-    -webkit-mask-size: contain;
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-}
-
-.contact-icon.person {
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E");
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E");
-}
-
-.contact-icon.business {
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z'/%3E%3C/svg%3E");
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z'/%3E%3C/svg%3E");
-}
-
-.contact-icon.phone {
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z'/%3E%3C/svg%3E");
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z'/%3E%3C/svg%3E");
-}
-
-.contact-icon.email {
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z'/%3E%3C/svg%3E");
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z'/%3E%3C/svg%3E");
-}
-
-.contact-icon.location {
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/%3E%3C/svg%3E");
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/%3E%3C/svg%3E");
-}
-
-.contact-item p, 
-.contact-item a {
-    color: var(--text-color);
-    font-size: 1.1rem;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.contact-item a:hover {
-    color: var(--primary-color);
-}
-
-.contact-form {
-    padding: 2rem;
-    background: rgba(26, 26, 26, 0.6);
-    border-radius: 10px;
-    border: 1px solid var(--primary-color);
 }
 
 /* Form Validation Messages */
