@@ -2,6 +2,23 @@
 
 All notable changes to the Gartin WiFi Solutions website will be documented in this file.
 
+## [Unreleased]
+
+### Fixed
+- Restored navigation bar to original working state
+  - Fixed logo size and positioning
+  - Restored proper navigation link styling
+  - Fixed mobile menu functionality
+- Restored contact section layout and styling
+  - Improved contact form width and balance
+  - Enhanced form input contrast and focus states
+  - Optimized form for mobile devices
+
+### Changed
+- Increased hero video brightness for better visibility
+- Enhanced contact form styling with better contrast and interactions
+- Improved mobile form usability to prevent iOS zoom on focus
+
 ## [2025-03-10]
 
 ### Changed
